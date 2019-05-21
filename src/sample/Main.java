@@ -15,7 +15,7 @@ public class Main extends Application {
         Controller a = controllerA.getController();
         a.init();
         primaryStage.setTitle("Pandora's jar");
-        primaryStage.setScene(new Scene(root, primaryStage.getMaxHeight(), primaryStage.getMaxWidth()));
+        primaryStage.setScene(new Scene(root, primaryStage.getHeight(), primaryStage.getWidth()));
         primaryStage.show();
     }
 

@@ -19,7 +19,6 @@ public class RegisterController {
 		
 	}
 	public void refuse(ActionEvent e) {
-		
 	}
 	public RegisterController() {
 		

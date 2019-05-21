@@ -1,7 +1,12 @@
 package sample;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
@@ -9,6 +14,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class Controller {
     @FXML
@@ -31,7 +37,18 @@ public class Controller {
     }
     
     public void registration(ActionEvent e) {
-    	
+    	Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("register.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Registration");
+            stage.setScene(new Scene(root, 450, 450));
+            stage.show();
+            // Hide this current window (if this is what you want)
+        }
+        catch (IOException ed) {
+            ed.printStackTrace();
+        }
     }
     
     public String choosedFile() {
