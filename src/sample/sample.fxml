@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.media.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -15,38 +22,19 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem fx:id="newFile" mnemonicParsing="false" text="Add" />
             <MenuItem mnemonicParsing="false" text="Open…" />
             <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Preferences…" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
@@ -60,6 +48,10 @@
       <items>
         <AnchorPane>
           <children>
+                  <Button layoutX="74.0" layoutY="332.0" mnemonicParsing="false" text="Register">
+                     <opaqueInsets>
+                        <Insets bottom="150.0" top="150.0" />
+                     </opaqueInsets></Button>
             <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Master" textAlignment="CENTER" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x1" />
@@ -68,6 +60,15 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
+                  <Button layoutX="84.0" layoutY="290.0" mnemonicParsing="false" text="Login" />
+                  <PasswordField layoutX="26.0" layoutY="250.0" />
+                  <Label layoutX="80.0" layoutY="229.0" text="Password" />
+                  <TextField alignment="CENTER" layoutX="25.0" layoutY="189.0">
+                     <opaqueInsets>
+                        <Insets top="100.0" />
+                     </opaqueInsets>
+                  </TextField>
+                  <Label layoutX="77.0" layoutY="166.0" text="Username" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
@@ -75,6 +76,14 @@
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+                        <TableView layoutX="-6.0" layoutY="6.0" prefHeight="669.0" prefWidth="631.0">
+                          <columns>
+                            <TableColumn prefWidth="95.0" text="Name" />
+                            <TableColumn prefWidth="116.0" text="Genre" />
+                              <TableColumn prefWidth="104.0" text="Author" />
+                              <TableColumn prefWidth="114.0" text="Date" />
+                          </columns>
+                        </TableView>
               </children>
             </AnchorPane>
           </content>
@@ -82,6 +91,7 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+                  <MediaView fitHeight="200.0" fitWidth="200.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
           </children>
         </AnchorPane>
       </items>
