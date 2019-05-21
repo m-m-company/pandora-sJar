@@ -1,50 +1,37 @@
 package sample;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
 public class Controller {
-	
-	HashMap<String, ArrayList<String>> genres;
-	
-
     @FXML
     private MenuItem newFile;
-
     @FXML
-    private Font x1;
-
+    private TableView<String> gameList;
     @FXML
-    private Color x2;
-
+    private SplitPane splitPane;
     @FXML
-    private Font x3;
-
+    private Button register;
     @FXML
-    private Color x4;
+    private Button login;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private TextField username;
     
-    @SuppressWarnings("unchecked")
-	public void init() {
-    	genres = new HashMap<String, ArrayList<String>>();
-    	try {
-			FileInputStream fis = new FileInputStream("resources" + File.separator + "genres.pand");
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			genres = (HashMap<String, ArrayList<String>>) ois.readObject();
-			ois.close();
-			fis.close();
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+    public void init() {
+    	//TODO: da fare
+    }
+    
+    public void registration(ActionEvent e) {
+    	
     }
     
     public String choosedFile() {
@@ -52,5 +39,4 @@ public class Controller {
     	String path = fileChooser.showOpenDialog(null).getAbsolutePath();
     	return path;
     }
-
 }
