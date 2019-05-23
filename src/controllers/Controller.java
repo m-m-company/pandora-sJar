@@ -1,5 +1,6 @@
-package sample;
+package controllers;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -39,7 +40,7 @@ public class Controller {
     public void registration(ActionEvent e) {
     	Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("register.fxml"));
+            root = FXMLLoader.load(getClass().getResource(".."+File.separator+"view"+File.separator+"Register.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Registration");
             stage.setScene(new Scene(root, 450, 450));

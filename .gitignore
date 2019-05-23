@@ -14,6 +14,7 @@
 
 # Package Files #
 *.jar
+!javax.mail.jar
 *.war
 *.nar
 *.ear

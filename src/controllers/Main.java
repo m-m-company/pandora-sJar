@@ -1,4 +1,6 @@
-package sample;
+package controllers;
+
+import java.io.File;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,11 +12,11 @@ public class Main extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws Exception{
-    	FXMLLoader controllerA = new FXMLLoader(getClass().getResource("sample.fxml"));
+    	FXMLLoader controllerA = new FXMLLoader(getClass().getResource(".."+File.separator+"view"+File.separator+"MainApp.fxml"));
         VBox root = controllerA.load();
         Controller a = controllerA.getController();
         a.init();
-        primaryStage.setTitle("Pandora's jar");
+        primaryStage.setTitle("Pandora's Jar");
         primaryStage.setScene(new Scene(root, primaryStage.getHeight(), primaryStage.getWidth()));
         primaryStage.show();
     }

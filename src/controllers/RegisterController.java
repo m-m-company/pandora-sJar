@@ -1,19 +1,24 @@
-package sample;
+package controllers;
+
+import java.util.Date;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Random;
+import java.util.regex.Pattern;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import com.sun.mail.smtp.SMTPTransport;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import java.util.Properties;
-import java.util.Date;
-import java.util.regex.Pattern;
-
-import javax.mail.*;
-
-import javax.mail.internet.*;
-
-import com.sun.mail.smtp.*;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 public class RegisterController {
@@ -25,8 +30,23 @@ public class RegisterController {
 	private PasswordField confirmPassword;
 	@FXML
 	private TextField email;
-
+	private String code;
+	private String generateCode() {
+		int leftLimit = 97; // letter 'a'
+		int rightLimit = 122; // letter 'z'
+		int targetStringLength = 7;
+		Random random = new Random();
+		StringBuilder buffer = new StringBuilder(targetStringLength);
+		for (int i = 0; i < targetStringLength; i++) {
+			int randomLimitedInt = leftLimit + (int) 
+					random.nextFloat() * (rightLimit - leftLimit + 1);
+			buffer.append((char) randomLimitedInt);
+		}
+		String generatedString = buffer.toString();
+		return generatedString;
+	}
 	private void sendEmail(){
+		code = generateCode();
 		Properties props = System.getProperties();
 		props.put("mail.smtps.host","smtp.gmail.com");
 		props.put("mail.smtps.auth","true");
@@ -37,7 +57,8 @@ public class RegisterController {
 			msg.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email.getText(), false));
 			msg.setSubject("WELCOME!");
-			msg.setText("Welcome to Pandora's Jar my dear "+username.getText()+"!");
+			msg.setText("Welcome to Pandora's Jar my dear "+username.getText()+"!"
+					+ "\n Your code is: "+code);
 			msg.setHeader("X-Mailer", "");
 			msg.setSentDate(new Date());
 			SMTPTransport t =
@@ -50,9 +71,9 @@ public class RegisterController {
 			ex.printStackTrace();
 		}
 	}
-	private boolean testEmail(String input) {
+	private boolean testEmail(String email) {
 		return Pattern.matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\" +
-                ".[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", input ) ;
+                ".[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", email) ;
 	}
 	public void sendData(ActionEvent e) {
 		if(password.getText().equals(confirmPassword.getText())) {
@@ -62,6 +83,17 @@ public class RegisterController {
                 th.close();
             }
 		}
+	}
+	private boolean showConfirmDialog() {
+		TextInputDialog dialog = new TextInputDialog("walter");
+		dialog.setTitle("Confirm your code!");
+		dialog.setHeaderText("A code has been sent to your email address");
+		dialog.setContentText("Please enter your code:");
+		Optional<String> result;
+		do {
+		 result = dialog.showAndWait();
+		}while(!result.equals(code));
+		return true;
 	}
 	public void refuse(ActionEvent e) {
         Stage th = (Stage) username.getScene().getWindow();
