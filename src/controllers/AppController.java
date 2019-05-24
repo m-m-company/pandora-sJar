@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.File;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -17,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class Controller {
+public class AppController {
     @FXML
     private MenuItem newFile;
     @FXML
@@ -40,12 +39,11 @@ public class Controller {
     public void registration(ActionEvent e) {
     	Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource(".."+File.separator+"view"+File.separator+"Register.fxml"));
+            root = FXMLLoader.load(getClass().getResource(Main.viewPath+"Register.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Registration");
             stage.setScene(new Scene(root, 450, 450));
             stage.show();
-            // Hide this current window (if this is what you want)
         }
         catch (IOException ed) {
             ed.printStackTrace();
