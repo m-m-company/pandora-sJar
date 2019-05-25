@@ -48,6 +48,13 @@
       <items>
         <AnchorPane prefHeight="669.0" prefWidth="239.0">
           <children>
+                  <TextField fx:id="username" alignment="CENTER" layoutX="34.0" layoutY="192.0">
+                     <opaqueInsets>
+                        <Insets top="100.0" />
+                     </opaqueInsets>
+                  </TextField>
+                  <PasswordField fx:id="password" layoutX="33.0" layoutY="258.0" />
+                  <Button fx:id="login" layoutX="78.0" layoutY="295.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="81.0" text="Login" />
                   <Button fx:id="register" layoutX="45.0" layoutY="427.0" mnemonicParsing="false" onAction="#registration" prefHeight="25.0" prefWidth="110.0" text="Register">
                      <opaqueInsets>
                         <Insets bottom="150.0" top="150.0" />
@@ -60,14 +67,7 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <Button fx:id="login" layoutX="78.0" layoutY="295.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Login" />
-                  <PasswordField fx:id="password" layoutX="33.0" layoutY="258.0" />
                   <Label layoutX="88.0" layoutY="230.0" text="Password" />
-                  <TextField fx:id="username" alignment="CENTER" layoutX="34.0" layoutY="192.0">
-                     <opaqueInsets>
-                        <Insets top="100.0" />
-                     </opaqueInsets>
-                  </TextField>
                   <Label layoutX="86.0" layoutY="167.0" text="Username" />
                   <Label layoutX="21.0" layoutY="394.0" prefHeight="25.0" prefWidth="179.0" text="Don't have an account yet?" />
           </children>

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Properties;
@@ -14,6 +15,7 @@ import javax.mail.internet.MimeMessage;
 
 import com.sun.mail.smtp.SMTPTransport;
 
+import database.DBConnection;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +24,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class RegisterController {
@@ -51,6 +55,7 @@ public class RegisterController {
 
 	private void sendEmail() {
 		code = generateCode();
+		System.out.println(code);
 		//I can't use Thread 'cause of JavaFX
 		Platform.runLater(new Runnable() {
 			@Override
@@ -92,6 +97,13 @@ public class RegisterController {
 					Stage th = (Stage) username.getScene().getWindow();
 					showOkDialog();
 					th.close();
+					try {
+						DBConnection.creaConnessione();
+						DBConnection.inserisciDati(username.getText(), password.getText());
+						DBConnection.chiudiConnessione();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		}
@@ -124,5 +136,11 @@ public class RegisterController {
 		Stage th = (Stage) username.getScene().getWindow();
 		th.close();
 	}
+	
+	@FXML
+    void confirmAction(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			this.sendData(null);
+    }
 
 }

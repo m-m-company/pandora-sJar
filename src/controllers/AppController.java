@@ -1,7 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import database.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +50,22 @@ public class AppController {
         catch (IOException ed) {
             ed.printStackTrace();
         }
+    }
+    
+    @FXML
+    void loginAction(ActionEvent event) {
+    	String user = username.getText();
+    	String pass = password.getText();
+    	try {
+    		DBConnection.creaConnessione();
+			if(DBConnection.login(user, pass))
+				System.out.println("DATI CORRETTI");
+			else
+				System.out.println("DATI NON CORRETTI");
+			DBConnection.chiudiConnessione();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
     
     public String choosedFile() {
