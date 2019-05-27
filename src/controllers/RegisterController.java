@@ -99,7 +99,7 @@ public class RegisterController {
 					th.close();
 					try {
 						DBConnection.creaConnessione();
-						DBConnection.inserisciDati(username.getText(), password.getText());
+						DBConnection.inserisciDati(username.getText(), password.getText(), email.getText());
 						DBConnection.chiudiConnessione();
 					} catch (SQLException e1) {
 						e1.printStackTrace();

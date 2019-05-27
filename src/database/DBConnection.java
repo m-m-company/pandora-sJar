@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import controllers.Main;
+
 public class DBConnection {
 
 	private static Connection con = null;
@@ -27,23 +29,24 @@ public class DBConnection {
 	private static void creaTabella() throws SQLException {
 		if(con == null || con.isClosed())
 			return;
-		String query = "CREATE TABLE IF NOT EXISTS utenti(username varchar(50), password varchar(50));";
+		String query = "CREATE TABLE IF NOT EXISTS utenti(username varchar(50), password varchar(50), mail varchar(50), imagePath varchar(255));";
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate(query);
 		stmt.close();
 	}
 	
-	public static void inserisciDati(String username, String password) throws SQLException {
+	public static void inserisciDati(String username, String password, String mail) throws SQLException {
 		if(con == null || con.isClosed())
 			return;		
+		String imagePath = Main.resourcesPath + "defaultPic.png";
 		Statement stmt = con.createStatement();
-		stmt.executeUpdate("INSERT INTO utenti VALUES('"+username+"', '"+password+"');");
+		stmt.executeUpdate("INSERT INTO utenti VALUES('"+username+"', '"+password+"', '"+mail+"', '"+imagePath+"');");
 		stmt.close();
 	}
 	
-	public static boolean login(String username, String password) throws SQLException {
+	public static User login(String username, String password) throws SQLException {
 		if(con == null || con.isClosed())
-			return false;
+			return null;
 		String query = "select * from utenti where username=? and password=?;";
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, username);
@@ -51,10 +54,11 @@ public class DBConnection {
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			stmt.close();
-			return true;
+			User user = new User(rs.getString(1), rs.getString(4), rs.getString(3));
+			return user;
 		}
 		stmt.close();
-		return false;
+		return null;
 	}
 	
 }

@@ -6,11 +6,13 @@ public class User {
 	
 	private String username;
 	private Image image;
+	private String email;
 	
-	public User(String username, Image image) {
+	public User(String username, String imagePath, String email) {
 		super();
 		this.username = username;
-		this.image = image;
+		this.image = new Image(getClass().getResourceAsStream(imagePath));
+		this.email = email;
 	}
 	
 	public String getUsername() {
@@ -19,6 +21,10 @@ public class User {
 	
 	public Image getImage() {
 		return image;
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 
 }

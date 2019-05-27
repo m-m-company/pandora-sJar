@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import database.DBConnection;
+import database.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,7 @@ public class LoginController {
 
     @FXML
     private TextField username;
+    private User actualUser;
 
     @FXML
     public void registration(ActionEvent e) {
@@ -51,10 +53,11 @@ public class LoginController {
     	String pass = password.getText();
     	try {
     		DBConnection.creaConnessione();
-			if(DBConnection.login(user, pass)) {
+    		actualUser = DBConnection.login(user, pass);
+			if(actualUser != null) {
 				Parent root;
 		        try {
-		            root = FXMLLoader.load(getClass().getResource(Main.viewPath+"MainApp.fxml"));
+		            root = FXMLLoader.load(getClass().getResource(Main.viewPath+"App.fxml"));
 		            Stage stage = new Stage();
 		            stage.setTitle("Pandor's jar");
 		            stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
