@@ -57,7 +57,10 @@ public class LoginController {
 			if(actualUser != null) {
 				Parent root;
 		        try {
-		            root = FXMLLoader.load(getClass().getResource(Main.viewPath+"App.fxml"));
+		        	FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"App.fxml"));
+		        	root = loader.load();
+		        	AppController controller = loader.getController();
+		        	controller.init(actualUser);
 		            Stage stage = new Stage();
 		            stage.setTitle("Pandor's jar");
 		            stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));

@@ -38,7 +38,7 @@ public class DBConnection {
 	public static void inserisciDati(String username, String password, String mail) throws SQLException {
 		if(con == null || con.isClosed())
 			return;		
-		String imagePath = Main.resourcesPath + "defaultPic.png";
+		String imagePath = "file:" + Main.resourcesPath + "defaultPic.png";
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate("INSERT INTO utenti VALUES('"+username+"', '"+password+"', '"+mail+"', '"+imagePath+"');");
 		stmt.close();
@@ -53,8 +53,8 @@ public class DBConnection {
 		stmt.setString(2, password);
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
-			stmt.close();
 			User user = new User(rs.getString(1), rs.getString(4), rs.getString(3));
+			stmt.close();
 			return user;
 		}
 		stmt.close();

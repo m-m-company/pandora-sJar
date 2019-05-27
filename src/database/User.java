@@ -11,7 +11,7 @@ public class User {
 	public User(String username, String imagePath, String email) {
 		super();
 		this.username = username;
-		this.image = new Image(getClass().getResourceAsStream(imagePath));
+		this.image = new Image(imagePath);
 		this.email = email;
 	}
 	

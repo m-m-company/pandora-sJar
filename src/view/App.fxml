@@ -34,7 +34,7 @@
       <items>
         <AnchorPane>
                <children>
-                  <ImageView fx:id="propic" fitHeight="60.0" fitWidth="60.0" layoutX="25.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="propic" fitHeight="60.0" fitWidth="60.0" focusTraversable="true" layoutX="25.0" layoutY="16.0" pickOnBounds="true" />
                   <Label fx:id="username" layoutX="133.0" layoutY="31.0" prefHeight="20.0" prefWidth="67.0" text="Label" />
                </children></AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">

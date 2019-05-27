@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
-public class AppController {
+public class AppController{
 
     @FXML
     private FlowPane gameList;
