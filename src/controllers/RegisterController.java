@@ -37,16 +37,17 @@ public class RegisterController {
 	private PasswordField confirmPassword;
 	@FXML
 	private TextField email;
-	
+
 	private TextInputDialog dialog;
 	private String code;
+
 	private String generateCode() {
 		int leftLimit = 97; // letter 'a'
 		int rightLimit = 122; // letter 'z'
 		int targetStringLength = 7;
 		StringBuilder buffer = new StringBuilder(targetStringLength);
 		for (int i = 0; i < targetStringLength; i++) {
-			int randomLimitedInt = ThreadLocalRandom.current().nextInt(leftLimit, rightLimit+ 1);
+			int randomLimitedInt = ThreadLocalRandom.current().nextInt(leftLimit, rightLimit + 1);
 			buffer.append((char) randomLimitedInt);
 		}
 		String generatedString = buffer.toString();
@@ -56,7 +57,7 @@ public class RegisterController {
 	private void sendEmail() {
 		code = generateCode();
 		System.out.println(code);
-		//I can't use Thread 'cause of JavaFX
+		// I can't use Thread 'cause of JavaFX
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -69,7 +70,8 @@ public class RegisterController {
 					msg.setFrom(new InternetAddress("noreplypandorasjar@gmail.com"));
 					msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getText(), false));
 					msg.setSubject("WELCOME!");
-					msg.setText("Welcome to Pandora's Jar dear " + username.getText() + "!" + "\n Your code is: " + code);
+					msg.setText(
+							"Welcome to Pandora's Jar dear " + username.getText() + "!" + "\n Your code is: " + code);
 					msg.setHeader("X-Mailer", "");
 					msg.setSentDate(new Date());
 					SMTPTransport t = (SMTPTransport) session.getTransport("smtps");
@@ -78,7 +80,8 @@ public class RegisterController {
 					System.out.println("Response: " + t.getLastServerResponse());
 					t.close();
 				} catch (MessagingException ex) {
-					dialog.setHeaderText("There are problems with your internet connection, check it, press cancel and try it again");
+					dialog.setHeaderText(
+							"There are problems with your internet connection, check it, press cancel and try it again");
 				}
 			}
 		});
@@ -98,9 +101,8 @@ public class RegisterController {
 					showOkDialog();
 					th.close();
 					try {
-						DBConnection.creaConnessione();
-						DBConnection.inserisciDati(username.getText(), password.getText(), email.getText());
-						DBConnection.chiudiConnessione();
+						DBConnection.inst().insertUser(username.getText(), password.getText(), email.getText());
+						DBConnection.inst().closeConnection();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -108,6 +110,7 @@ public class RegisterController {
 			}
 		}
 	}
+
 	private boolean showConfirmDialog() {
 		dialog = new TextInputDialog();
 		dialog.setTitle("Confirm your code!");
@@ -116,31 +119,32 @@ public class RegisterController {
 		Optional<String> result;
 		do {
 			result = dialog.showAndWait();
-			if(!result.isPresent())
+			if (!result.isPresent())
 				return false;
-			if(!result.get().equals(code))
-				dialog.setContentText("Code is wrong!");
+			if (!result.get().equals(code))
+				dialog.setContentText("Code is wrong! Try again!");
 		} while (!result.get().equals(code));
 		return true;
 	}
+
 	private void showOkDialog() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Registration Complete!");
 		alert.setHeaderText(null);
-		alert.setContentText("I have a great message for you! \n"
-				+ "Your registration is complete! \n"
-				+ "Now you can Login!");
+		alert.setContentText(
+				"I have a great message for you! \n" + "Your registration is complete! \n" + "Now you can Login!");
 		alert.showAndWait();
 	}
+
 	public void refuse(ActionEvent e) {
 		Stage th = (Stage) username.getScene().getWindow();
 		th.close();
 	}
-	
+
 	@FXML
-    void confirmAction(KeyEvent event) {
-		if(event.getCode() == KeyCode.ENTER)
+	void confirmAction(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER)
 			this.sendData(null);
-    }
+	}
 
 }

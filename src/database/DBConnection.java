@@ -11,22 +11,43 @@ import controllers.Main;
 
 public class DBConnection {
 
-	private static Connection con = null;
+	private Connection con = null;
+	private static DBConnection db = null;
 	
-	public static void creaConnessione() throws SQLException {		
-			String url = "jdbc:sqlite:test.db";
-            con = DriverManager.getConnection(url);
-            creaTabella();
+	private DBConnection() {
+		try {
+			createConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public static void chiudiConnessione() throws SQLException {
+	public static DBConnection inst() {
+		if(db == null)
+			db = new DBConnection();
+		try {
+			if(db.con.isClosed())
+				db.createConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return db;
+	}
+	
+	private void createConnection() throws SQLException {		
+			String url = "jdbc:sqlite:test.db";
+            con = DriverManager.getConnection(url);
+            createTables();
+	}
+	
+	public void closeConnection() throws SQLException {
 		if(con == null)
 			return;		
 		con.close();
 		con = null;
 	}
 	
-	private static void creaTabella() throws SQLException {
+	private void createTables() throws SQLException {
 		if(con == null || con.isClosed())
 			return;
 		String query = "CREATE TABLE IF NOT EXISTS utenti(username varchar(50), password varchar(50), mail varchar(50), imagePath varchar(255));";
@@ -35,7 +56,7 @@ public class DBConnection {
 		stmt.close();
 	}
 	
-	public static void inserisciDati(String username, String password, String mail) throws SQLException {
+	public void insertUser(String username, String password, String mail) throws SQLException {
 		if(con == null || con.isClosed())
 			return;		
 		String imagePath = "file:" + Main.resourcesPath + "defaultPic.png";
@@ -44,7 +65,7 @@ public class DBConnection {
 		stmt.close();
 	}
 	
-	public static User login(String username, String password) throws SQLException {
+	public User login(String username, String password) throws SQLException {
 		if(con == null || con.isClosed())
 			return null;
 		String query = "select * from utenti where username=? and password=?;";
@@ -60,5 +81,4 @@ public class DBConnection {
 		stmt.close();
 		return null;
 	}
-	
 }

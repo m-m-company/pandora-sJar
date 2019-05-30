@@ -52,8 +52,7 @@ public class LoginController {
     	String user = username.getText();
     	String pass = password.getText();
     	try {
-    		DBConnection.creaConnessione();
-    		actualUser = DBConnection.login(user, pass);
+    		actualUser = DBConnection.inst().login(user, pass);
 			if(actualUser != null) {
 				Parent root;
 		        try {
@@ -74,7 +73,7 @@ public class LoginController {
 			}
 			else
 				System.out.println("DATI NON CORRETTI");
-			DBConnection.chiudiConnessione();
+			DBConnection.inst().closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
