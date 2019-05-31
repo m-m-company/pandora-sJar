@@ -26,6 +26,8 @@ public class DBConnection {
 		if(db == null)
 			db = new DBConnection();
 		try {
+			if(db.con == null)
+				db.createConnection();
 			if(db.con.isClosed())
 				db.createConnection();
 		} catch (SQLException e) {
@@ -50,7 +52,7 @@ public class DBConnection {
 	private void createTables() throws SQLException {
 		if(con == null || con.isClosed())
 			return;
-		String query = "CREATE TABLE IF NOT EXISTS utenti(username varchar(50), password varchar(50), mail varchar(50), imagePath varchar(255));";
+		String query = "CREATE TABLE IF NOT EXISTS utenti(id integer primary key autoincrement, username varchar(50), password varchar(50), mail varchar(50), imagePath varchar(255));";
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate(query);
 		stmt.close();
@@ -61,7 +63,7 @@ public class DBConnection {
 			return;		
 		String imagePath = "file:" + Main.resourcesPath + "defaultPic.png";
 		Statement stmt = con.createStatement();
-		stmt.executeUpdate("INSERT INTO utenti VALUES('"+username+"', '"+password+"', '"+mail+"', '"+imagePath+"');");
+		stmt.executeUpdate("INSERT INTO utenti (username,password,mail,imagePath) VALUES('"+username+"', '"+password+"', '"+mail+"', '"+imagePath+"');");
 		stmt.close();
 	}
 	
@@ -74,11 +76,26 @@ public class DBConnection {
 		stmt.setString(2, password);
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
-			User user = new User(rs.getString(1), rs.getString(4), rs.getString(3));
+			System.out.println(rs.getString(5));
+			User user = new User(rs.getInt(1), rs.getString(2), rs.getString(5), rs.getString(4), rs.getString(3));
 			stmt.close();
 			return user;
 		}
 		stmt.close();
 		return null;
+	}
+	
+	public void changeDataUser(User user) throws SQLException {
+		if(con == null || con.isClosed())
+			return;
+		String query = "update utenti set username=?, password=?, mail=?, imagePath=? where id=?";
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, user.getUsername());
+		stmt.setString(2, user.getPassword());
+		stmt.setString(3, user.getEmail());
+		stmt.setString(4, user.getImagePath());
+		System.out.println(user.getImagePath());
+		stmt.setInt(5, user.getId());
+		stmt.executeUpdate();
 	}
 }

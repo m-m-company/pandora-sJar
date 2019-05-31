@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -29,6 +30,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class RegisterController {
+	
+	@FXML
+    private Label errorEmail;
+	@FXML
+    private Label errorPassword1;
+    @FXML
+    private Label errorPassword2;
 	@FXML
 	private TextField username;
 	@FXML
@@ -94,7 +102,10 @@ public class RegisterController {
 
 	public void sendData(ActionEvent e) {
 		if (password.getText().equals(confirmPassword.getText())) {
+			errorPassword1.setVisible(false);
+			errorPassword2.setVisible(false);
 			if (testEmail(email.getText()) && !username.getText().equals("")) {
+				errorEmail.setVisible(false);
 				sendEmail();
 				if (showConfirmDialog()) {
 					Stage th = (Stage) username.getScene().getWindow();
@@ -108,7 +119,14 @@ public class RegisterController {
 					}
 				}
 			}
+			else
+				errorEmail.setVisible(true);
 		}
+		else {
+			errorPassword1.setVisible(true);
+			errorPassword2.setVisible(true);
+		}
+			
 	}
 
 	private boolean showConfirmDialog() {

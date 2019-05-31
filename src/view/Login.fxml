@@ -27,5 +27,6 @@
       <Label layoutX="120.0" layoutY="143.0" text="Password" />
       <Label layoutX="55.0" layoutY="247.0" prefHeight="21.0" prefWidth="155.0" text="Forgot password? Click " />
       <Label layoutX="210.0" layoutY="247.0" onMousePressed="#forgotPassword" prefHeight="21.0" prefWidth="36.0" text="HERE" />
+      <Label fx:id="errorData" layoutX="14.0" layoutY="25.0" prefHeight="34.0" prefWidth="300.0" text="Username and/or password are not correct!" textFill="RED" underline="true" visible="false" />
    </children>
 </AnchorPane>

@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -18,6 +19,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class LoginController {
+	
+	@FXML
+	private Label errorData;
 
     @FXML
     private PasswordField password;
@@ -54,6 +58,7 @@ public class LoginController {
     	try {
     		actualUser = DBConnection.inst().login(user, pass);
 			if(actualUser != null) {
+				errorData.setVisible(false);
 				Parent root;
 		        try {
 		        	FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"App.fxml"));
@@ -72,7 +77,7 @@ public class LoginController {
 		        }
 			}
 			else
-				System.out.println("DATI NON CORRETTI");
+				errorData.setVisible(true);
 			DBConnection.inst().closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
