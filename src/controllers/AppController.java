@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import model.User;
 import javafx.event.ActionEvent;
@@ -38,8 +39,12 @@ public class AppController{
 			 root = loader.load();
 			GameController controller = loader.getController();
 			controller.initialize();
-			gameList.getChildren().add(null);
-			System.out.println(gameList.getChildren());
+			if(gameList == null) {
+				gameList = new FlowPane(root.getClip());
+				System.out.println(gameList.getChildren());
+			}else
+				gameList.getChildren().add((Node) root);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

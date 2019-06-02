@@ -2,13 +2,11 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="196.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameController">
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane onMouseClicked="#prova" prefHeight="196.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameController">
     <children>
-        <ImageView fx:id="gameImage" fitHeight="196.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true"/>
-        <Label fx:id="name" alignment="CENTER" layoutX="1.0" layoutY="165.0" prefHeight="32.0" prefWidth="128.0"
-               textAlignment="CENTER" underline="true" wrapText="true" AnchorPane.bottomAnchor="0.0"
-               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="165.0"/>
+        <ImageView fx:id="gameImage" fitHeight="196.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="name" alignment="CENTER" layoutX="1.0" layoutY="165.0" prefHeight="32.0" prefWidth="128.0" textAlignment="CENTER" underline="true" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="165.0" />
     </children>
 </AnchorPane>
