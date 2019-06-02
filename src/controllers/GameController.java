@@ -6,17 +6,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import model.Game;
 
 public class GameController extends AnchorPane {
     @FXML
     public ImageView gameImage;
     @FXML
     public Label name;
+    private Game game;
     @FXML
     public void initialize() {
-        System.out.println("ciao");
         gameImage.setImage(new Image("file:" + Main.resourcesPath + "defaultPic.png"));
-        name.setText("hey");
     }
     @FXML
     public void prova(MouseEvent e){

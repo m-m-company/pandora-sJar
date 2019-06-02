@@ -26,9 +26,7 @@ public class DBConnection {
 		if(db == null)
 			db = new DBConnection();
 		try {
-			if(db.con == null)
-				db.createConnection();
-			if(db.con.isClosed())
+			if(db.con == null || db.con.isClosed())
 				db.createConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -37,7 +35,7 @@ public class DBConnection {
 	}
 	
 	private void createConnection() throws SQLException {		
-			String url = "jdbc:sqlite:test.db";
+			String url = "jdbc:sqlite:database.db";
             con = DriverManager.getConnection(url);
             createTables();
 	}
@@ -52,8 +50,30 @@ public class DBConnection {
 	private void createTables() throws SQLException {
 		if(con == null || con.isClosed())
 			return;
-		String query = "CREATE TABLE IF NOT EXISTS utenti(id integer primary key autoincrement, username varchar(50), password varchar(50), mail varchar(50), imagePath varchar(255));";
+		String query = "CREATE TABLE IF NOT EXISTS " +
+				"users(" +
+					"id integer primary key autoincrement," +
+					"username varchar(50)," +
+					"password varchar(50), " +
+					"mail varchar(50)," +
+					"imagePath varchar(255)" +
+				");";
 		Statement stmt = con.createStatement();
+		stmt.executeUpdate(query);
+		query = "CREATE TABLE IF NOT EXISTS " +
+				"games(" +
+					"name varchar(500) primary key," +
+					"path varchar(255)" +
+				");";
+		stmt.executeUpdate(query);
+		query = "CREATE TABLE IF NOT EXISTS " +
+				"ranks(" +
+					"id_player integer," +
+					"game varchar(500)," +
+					"points integer" +
+					"FOREIGN KEY(id_player) REFERENCES users(id)" +
+					"FOREIGN KEY(game) REFERENCES games(id)" +
+				");";
 		stmt.executeUpdate(query);
 		stmt.close();
 	}
@@ -63,14 +83,14 @@ public class DBConnection {
 			return;		
 		String imagePath = "file:" + Main.resourcesPath + "defaultPic.png";
 		Statement stmt = con.createStatement();
-		stmt.executeUpdate("INSERT INTO utenti (username,password,mail,imagePath) VALUES('"+username+"', '"+password+"', '"+mail+"', '"+imagePath+"');");
+		stmt.executeUpdate("INSERT INTO users (username,password,mail,imagePath) VALUES('"+username+"', '"+password+"', '"+mail+"', '"+imagePath+"');");
 		stmt.close();
 	}
 	
 	public User login(String username, String password) throws SQLException {
 		if(con == null || con.isClosed())
 			return null;
-		String query = "select * from utenti where username=? and password=?;";
+		String query = "select * from users where username=? and password=?;";
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, username);
 		stmt.setString(2, password);
@@ -88,7 +108,7 @@ public class DBConnection {
 	public void changeDataUser(User user) throws SQLException {
 		if(con == null || con.isClosed())
 			return;
-		String query = "update utenti set username=?, password=?, mail=?, imagePath=? where id=?";
+		String query = "update users set username=?, password=?, mail=?, imagePath=? where id=?";
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, user.getUsername());
 		stmt.setString(2, user.getPassword());
