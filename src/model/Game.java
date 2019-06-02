@@ -5,15 +5,24 @@ import java.util.Map;
 public class Game {
 
     private String name;
-    private String imagePath;
+    private String path;
     private Map<String,Integer> ranks;
 
-    public String getImagePath() {
-        return imagePath;
+    public String getPath() {
+        return path;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public Game(String name, String path, Map<String, Integer> ranks) {
+        this.name = name;
+        this.path = path;
+        this.ranks = ranks;
+    }
+    public Game(String name, String path) {
+        this.name = name;
+        this.path = path;
+    }
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public Map<String, Integer> getRanks() {

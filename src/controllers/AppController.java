@@ -1,9 +1,13 @@
 package controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import model.DBConnection;
+import model.Game;
 import model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,26 +34,61 @@ public class AppController{
     @FXML
     private MediaView preview;
 
+	private User actualUser;
+
 	@FXML
 	public void initialize() {
 	}
 
 	@FXML
-	public void add(){
+	public void add(Game g){
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"Game.fxml"));
+		GameController controller = loader.getController();
+		controller.setGame(g);
+		controller.init();
 		Parent root;
 		try {
 			root = loader.load();
-			GameController controller = loader.getController();
-			controller.initialize();
 			gameList.getChildren().add((Node) root);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-    private User actualUser;
-    
+	@FXML
+	public void openAddGame(){
+		Parent root;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"AddGame.fxml"));
+		AddGameController gameController = loader.getController();
+		gameController.setApp(this);
+		try {
+			root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add a game");
+			stage.setScene(new Scene(root, 300, 500));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void refreshGamesList(){
+		try {
+			if(gameList.getChildren().size() >0){
+				gameList.getChildren().clear();
+			}
+			ArrayList<Game> games = DBConnection.inst().getGames();
+			for (Game g : games){
+				add(g);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
     public void init(User actualUser) {
     	this.actualUser = actualUser;
     	refresh();

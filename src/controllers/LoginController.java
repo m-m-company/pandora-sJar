@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.scene.input.MouseEvent;
 import model.DBConnection;
 import model.User;
 import javafx.event.ActionEvent;
@@ -85,7 +86,7 @@ public class LoginController {
     }
 
     @FXML
-    void forgotPassword(ActionEvent event) {
+    void forgotPassword(MouseEvent event) {
  
     }
 

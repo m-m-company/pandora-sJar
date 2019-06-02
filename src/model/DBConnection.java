@@ -1,11 +1,8 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import controllers.Main;
 
@@ -68,11 +65,9 @@ public class DBConnection {
 		stmt.executeUpdate(query);
 		query = "CREATE TABLE IF NOT EXISTS " +
 				"ranks(" +
-					"id_player integer," +
+					"idplayer integer," +
 					"game varchar(500)," +
 					"points integer" +
-					"FOREIGN KEY(id_player) REFERENCES users(id)" +
-					"FOREIGN KEY(game) REFERENCES games(id)" +
 				");";
 		stmt.executeUpdate(query);
 		stmt.close();
@@ -118,4 +113,39 @@ public class DBConnection {
 		stmt.setInt(5, user.getId());
 		stmt.executeUpdate();
 	}
+
+	public void insertGame(Game g) throws SQLException {
+		String query = "Insert into games values (?,?)";
+		PreparedStatement pstmt = con.prepareStatement(query);
+		pstmt.setString(1, g.getName());
+		pstmt.setString(2, g.getPath());
+		pstmt.execute();
+		pstmt.close();
+	}
+
+	public ArrayList<Game> getGames() throws SQLException {
+		ArrayList<Game> games = new ArrayList<>();
+		String query = "Select * from games";
+		Statement stmt = con.createStatement();
+		String subQuery = "Select username,points" +
+				"From users,ranks,games" +
+				"		Where ranks.game=? and users.id = ranks.idplayer and games.name = ranks.game";
+		PreparedStatement pstmt = con.prepareStatement(subQuery);
+		ResultSet rs = stmt.executeQuery(query);
+		while(rs.next()){
+			pstmt.setString(1, rs.getString(1));
+			ResultSet ranks = pstmt.executeQuery();
+			HashMap<String, Integer> rank = new HashMap<>();
+			while(ranks.next()){
+				rank.put(ranks.getString(1), ranks.getInt(3));
+			}
+			games.add(new Game(rs.getString(1),rs.getString(2), rank));
+		}
+		stmt.close();
+		pstmt.close();
+		return games;
+	}
+
+
+
 }

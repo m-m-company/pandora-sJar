@@ -2,12 +2,16 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.DBConnection;
+import model.Game;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 
 public class AddGameController {
     @FXML
@@ -15,8 +19,24 @@ public class AddGameController {
     @FXML
     public TextField path;
 
-    public void submit(ActionEvent actionEvent) {
+    private AppController app;
 
+    public AppController getApp() {
+        return app;
+    }
+
+    public void setApp(AppController app) {
+        this.app = app;
+    }
+
+    public void submit(ActionEvent actionEvent) {
+        try {
+            DBConnection.inst().insertGame(new Game(name.getText(), path.getText()));
+            app.refreshGamesList();
+            cancel(null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void browse(ActionEvent actionEvent){
