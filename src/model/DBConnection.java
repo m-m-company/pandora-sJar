@@ -127,9 +127,9 @@ public class DBConnection {
 		ArrayList<Game> games = new ArrayList<>();
 		String query = "Select * from games";
 		Statement stmt = con.createStatement();
-		String subQuery = "Select username,points" +
-				"From users,ranks,games" +
-				"		Where ranks.game=? and users.id = ranks.idplayer and games.name = ranks.game";
+		String subQuery = "Select username, points " +
+				"From users,ranks,games " +
+				"Where  game = ? and id = idplayer and name = game;";
 		PreparedStatement pstmt = con.prepareStatement(subQuery);
 		ResultSet rs = stmt.executeQuery(query);
 		while(rs.next()){

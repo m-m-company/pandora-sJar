@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import model.DBConnection;
 import model.Game;
 import model.User;
@@ -38,17 +37,18 @@ public class AppController{
 
 	@FXML
 	public void initialize() {
+		refreshGamesList();
 	}
 
 	@FXML
 	public void add(Game g){
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"Game.fxml"));
-		GameController controller = loader.getController();
-		controller.setGame(g);
-		controller.init();
 		Parent root;
 		try {
 			root = loader.load();
+			GameController controller = loader.getController();
+			controller.setGame(g);
+			controller.init();
 			gameList.getChildren().add((Node) root);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -59,10 +59,10 @@ public class AppController{
 	public void openAddGame(){
 		Parent root;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"AddGame.fxml"));
-		AddGameController gameController = loader.getController();
-		gameController.setApp(this);
 		try {
 			root = loader.load();
+			AddGameController gameController = loader.getController();
+			gameController.setApp(this);
 			Stage stage = new Stage();
 			stage.setTitle("Add a game");
 			stage.setScene(new Scene(root, 300, 500));
@@ -91,10 +91,10 @@ public class AppController{
 
     public void init(User actualUser) {
     	this.actualUser = actualUser;
-    	refresh();
+    	refreshAccount();
     }
     
-    public void refresh() {
+    public void refreshAccount() {
     	username.setText(actualUser.getUsername());
     	propic.setImage(actualUser.getImage());
     }

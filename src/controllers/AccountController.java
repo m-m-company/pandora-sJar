@@ -102,7 +102,7 @@ public class AccountController {
 		}
     	Stage th = (Stage) username.getScene().getWindow();
         th.close();
-        app.refresh();
+        app.refreshAccount();
     }
 
 }
