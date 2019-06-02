@@ -18,5 +18,8 @@ public class GameController extends AnchorPane {
         gameImage.setImage(new Image("file:" + Main.resourcesPath + "defaultPic.png"));
         name.setText("hey");
     }
-
+    @FXML
+    public void prova(MouseEvent e){
+        System.out.println("asudyjga");
+    }
 }

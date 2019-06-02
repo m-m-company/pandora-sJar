@@ -32,19 +32,17 @@ public class AppController{
 
 	@FXML
 	public void initialize() {
-		System.out.println("ciao");
+	}
+
+	@FXML
+	public void add(){
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"Game.fxml"));
 		Parent root;
 		try {
-			 root = loader.load();
+			root = loader.load();
 			GameController controller = loader.getController();
 			controller.initialize();
-			if(gameList == null) {
-				gameList = new FlowPane(root.getClip());
-				System.out.println(gameList.getChildren());
-			}else
-				gameList.getChildren().add((Node) root);
-
+			gameList.getChildren().add((Node) root);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
