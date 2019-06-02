@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 
+import javafx.scene.layout.AnchorPane;
 import model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +28,23 @@ public class AppController{
     
     @FXML
     private MediaView preview;
-    
+
+	@FXML
+	public void initialize() {
+		System.out.println("ciao");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"Game.fxml"));
+		Parent root;
+		try {
+			 root = loader.load();
+			GameController controller = loader.getController();
+			controller.initialize();
+			gameList.getChildren().add(null);
+			System.out.println(gameList.getChildren());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
     private User actualUser;
     
     public void init(User actualUser) {
