@@ -2,7 +2,7 @@ package controllers;
 
 import java.io.IOException;
 
-import database.User;
+import model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

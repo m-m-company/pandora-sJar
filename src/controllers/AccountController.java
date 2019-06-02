@@ -4,8 +4,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 
-import database.DBConnection;
-import database.User;
+import model.DBConnection;
+import model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

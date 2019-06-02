@@ -3,8 +3,8 @@ package controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import database.DBConnection;
-import database.User;
+import model.DBConnection;
+import model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
