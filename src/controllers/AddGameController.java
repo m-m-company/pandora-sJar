@@ -38,11 +38,18 @@ public class AddGameController {
         }
     }
 
-    public void browse(ActionEvent actionEvent){
+    public void browse(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
         try {
-            path.setText(file.getParentFile().toURI().toURL().toExternalForm());
+            System.out.println("a");
+            System.out.println(file.getAbsoluteFile().toURI().toURL().toExternalForm());
+            System.out.println("a");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            path.setText(file.toURI().toURL().toExternalForm());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

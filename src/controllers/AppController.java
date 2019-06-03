@@ -19,101 +19,100 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
-public class AppController{
+public class AppController {
 
     @FXML
     private FlowPane gameList;
 
     @FXML
     private Label username;
-    
+
     @FXML
     private ImageView propic;
-    
+
     @FXML
     private MediaView preview;
 
-	private User actualUser;
+    private User actualUser;
 
-	@FXML
-	public void initialize() {
-		refreshGamesList();
-	}
+    @FXML
+    public void initialize() {
+        refreshGamesList();
+    }
 
-	@FXML
-	public void add(Game g){
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"Game.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
-			GameController controller = loader.getController();
-			controller.setGame(g);
-			controller.init();
-			gameList.getChildren().add((Node) root);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    @FXML
+    public void add(Game g) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath + "Game.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            GameController controller = loader.getController();
+            controller.setGame(g);
+            controller.init();
+            gameList.getChildren().add((Node) root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@FXML
-	public void openAddGame(){
-		Parent root;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"AddGame.fxml"));
-		try {
-			root = loader.load();
-			AddGameController gameController = loader.getController();
-			gameController.setApp(this);
-			Stage stage = new Stage();
-			stage.setTitle("Add a game");
-			stage.setScene(new Scene(root, 300, 500));
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    @FXML
+    public void openAddGame() {
+        Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath + "AddGame.fxml"));
+        try {
+            root = loader.load();
+            AddGameController gameController = loader.getController();
+            gameController.setApp(this);
+            Stage stage = new Stage();
+            stage.setTitle("Add a game");
+            stage.setScene(new Scene(root, 300, 500));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
-	public void refreshGamesList(){
-		try {
-			if(gameList.getChildren().size() >0){
-				gameList.getChildren().clear();
-			}
-			ArrayList<Game> games = DBConnection.inst().getGames();
-			for (Game g : games){
-				add(g);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
+    public void refreshGamesList() {
+        try {
+            if (gameList.getChildren().size() > 0) {
+                gameList.getChildren().clear();
+            }
+            ArrayList<Game> games = DBConnection.inst().getGames();
+            for (Game g : games) {
+                add(g);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void init(User actualUser) {
-    	this.actualUser = actualUser;
-    	refreshAccount();
+        this.actualUser = actualUser;
+        refreshAccount();
     }
-    
+
     public void refreshAccount() {
-    	username.setText(actualUser.getUsername());
-    	propic.setImage(actualUser.getImage());
+        username.setText(actualUser.getUsername());
+        propic.setImage(actualUser.getImage());
     }
-    
+
     @FXML
     void manageAccount(ActionEvent event) {
-    	Parent root;
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"Account.fxml"));
-    	try {
-			root = loader.load();
-			AccountController controller = loader.getController();
-			controller.init(actualUser, this);
-			Stage stage = new Stage();
-			stage.setTitle("Account");
-			stage.setScene(new Scene(root, 400, 500));
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath + "Account.fxml"));
+        try {
+            root = loader.load();
+            AccountController controller = loader.getController();
+            controller.init(actualUser, this);
+            Stage stage = new Stage();
+            stage.setTitle("Account");
+            stage.setScene(new Scene(root, 400, 500));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
