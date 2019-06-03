@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import model.DBConnection;
 import model.Game;
 import model.User;
@@ -33,11 +35,15 @@ public class AppController {
     @FXML
     private MediaView preview;
 
+    @FXML
+    private Button playButton;
+
     private User actualUser;
 
     @FXML
     public void initialize() {
         refreshGamesList();
+        playButton.setGraphic(new ImageView(new Image("file:"+Main.resourcesPath+"playButton.png",40,40,false,false)));
     }
 
     @FXML
