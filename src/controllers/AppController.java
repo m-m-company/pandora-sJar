@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import model.DBConnection;
@@ -61,7 +64,7 @@ public class AppController {
             root = loader.load();
             GameController controller = loader.getController();
             controller.setGame(g);
-            controller.init();
+            controller.init(this);
             gameList.getChildren().add((Node) root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -127,5 +130,14 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
+	public void showPreview(Game game) {
+		File f = new File(game.getPath());
+        File h = new File(f.getParent() + File.separator + "media.mp4");
+        Media media = new Media("http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv");
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        preview.setMediaPlayer(mediaPlayer);
+	}
 
 }
