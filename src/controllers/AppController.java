@@ -4,27 +4,31 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import model.DBConnection;
-import model.Game;
-import model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import model.DBConnection;
+import model.Game;
+import model.User;
 
 public class AppController {
 
     @FXML
     private FlowPane gameList;
+    
+    @FXML
+    private ScrollPane scrollPane;
 
     @FXML
     private Label username;
@@ -44,9 +48,12 @@ public class AppController {
     public void initialize() {
         refreshGamesList();
         playButton.setGraphic(new ImageView(new Image("file:"+Main.resourcesPath+"playButton.png",40,40,false,false)));
+        gameList.prefWidthProperty().bind(scrollPane.widthProperty());
+        gameList.prefHeightProperty().bind(scrollPane.heightProperty());
+        gameList.setHgap(10f);
+        gameList.setVgap(5f);
     }
 
-    @FXML
     public void add(Game g) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath + "Game.fxml"));
         Parent root;
