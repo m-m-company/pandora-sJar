@@ -83,7 +83,7 @@ public class AccountController {
     }
 
     @FXML
-    void CanelAction(ActionEvent event) {
+    void CancelAction(ActionEvent event) {
     	user = oldUser;
     	Stage th = (Stage) username.getScene().getWindow();
         th.close();
@@ -103,6 +103,24 @@ public class AccountController {
     	Stage th = (Stage) username.getScene().getWindow();
         th.close();
         app.refreshAccount();
+    }
+    
+    @FXML
+    void enterCancel(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		CancelAction(null);
+    }
+    
+    @FXML
+    void enterConfirm(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		ConfirmAction(null);
+    }
+    
+    @FXML
+    void enterSelectImage(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		changeImage(null);
     }
 
 }

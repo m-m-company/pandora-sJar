@@ -163,6 +163,22 @@ public class RegisterController {
 	void confirmAction(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER)
 			this.sendData(null);
+		if(event.getCode() == KeyCode.ESCAPE) {
+			Stage th = (Stage) username.getScene().getWindow();
+			th.close();
+		}
 	}
+	
+	@FXML
+    void enterConfirm(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			sendData(null);
+    }
+	
+	@FXML
+    void enterCancel(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			refuse(null);
+    }
 
 }

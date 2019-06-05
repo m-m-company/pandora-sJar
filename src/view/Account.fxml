@@ -9,7 +9,7 @@
 <AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AccountController">
    <children>
       <ImageView fx:id="imageView" fitHeight="60.0" fitWidth="60.0" layoutX="163.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="142.0" layoutY="115.0" mnemonicParsing="false" onAction="#changeImage" text="Select image" />
+      <Button layoutX="142.0" layoutY="115.0" mnemonicParsing="false" onAction="#changeImage" onKeyPressed="#enterSelectImage" text="Select image" />
       <TextField fx:id="email" layoutX="185.0" layoutY="175.0" onKeyPressed="#enterFromEmail" />
       <TextField fx:id="username" layoutX="185.0" layoutY="238.0" onKeyPressed="#enterFromUsername" />
       <PasswordField fx:id="oldPassword" layoutX="185.0" layoutY="302.0" onKeyPressed="#enterFromOld" />
@@ -17,8 +17,8 @@
       <Label layoutX="69.0" layoutY="175.0" prefHeight="25.0" prefWidth="36.0" text="email" />
       <Label layoutX="60.0" layoutY="238.0" prefHeight="25.0" prefWidth="67.0" text="Username" />
       <Label layoutX="49.0" layoutY="302.0" prefHeight="25.0" prefWidth="93.0" text="Old password" />
-      <Button layoutX="80.0" layoutY="447.0" mnemonicParsing="false" onAction="#CanelAction" text="Cancel" />
-      <Button layoutX="245.0" layoutY="447.0" mnemonicParsing="false" onAction="#ConfirmAction" text="Confirm" />
+      <Button layoutX="80.0" layoutY="447.0" mnemonicParsing="false" onAction="#CancelAction" onKeyPressed="#enterCancel" text="Cancel" />
+      <Button layoutX="245.0" layoutY="447.0" mnemonicParsing="false" onAction="#ConfirmAction" onKeyPressed="#enterConfirm" text="Confirm" />
       <Label layoutX="48.0" layoutY="366.0" prefHeight="25.0" prefWidth="95.0" text="New password" />
    </children>
 </AnchorPane>

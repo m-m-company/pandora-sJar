@@ -96,5 +96,25 @@ public class LoginController {
     	if(event.getCode() == KeyCode.ENTER)
     		loginAction(null);
     }
+    
+    @FXML
+    void enterRegister(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		registration(null);
+    }
+    
+    @FXML
+    void enterLogin(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		loginAction(null);
+    }
+    
+    @FXML
+    void exit(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ESCAPE) {
+    		Stage th = (Stage) username.getScene().getWindow();
+        	th.close();
+    	}
+    }
 
 }

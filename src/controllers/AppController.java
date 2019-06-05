@@ -16,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -139,5 +141,25 @@ public class AppController {
         mediaPlayer.setAutoPlay(true);
         preview.setMediaPlayer(mediaPlayer);
 	}
-
+	
+	@FXML
+    void exit(KeyEvent event) {
+		if(event.getCode() == KeyCode.ESCAPE) {
+			Stage th = (Stage) username.getScene().getWindow();
+			th.close();
+		}
+    }
+	
+	@FXML
+    void enterAddGame(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			openAddGame();
+    }
+	
+	@FXML
+    void enterManageAccount(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			manageAccount(null);
+    }
+	
 }

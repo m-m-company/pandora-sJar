@@ -19,8 +19,8 @@
       <Label layoutX="42.0" layoutY="150.0" prefHeight="25.0" prefWidth="67.0" text="Username" />
       <Label layoutX="48.0" layoutY="242.0" prefHeight="25.0" prefWidth="62.0" text="Password" />
       <Label layoutX="20.0" layoutY="334.0" text="Confirm password" />
-      <Button layoutX="75.0" layoutY="386.0" mnemonicParsing="false" onAction="#refuse" text="Cancel" />
-      <Button layoutX="251.0" layoutY="386.0" mnemonicParsing="false" onAction="#sendData" text="Confirm" />
+      <Button layoutX="75.0" layoutY="386.0" mnemonicParsing="false" onAction="#refuse" onKeyReleased="#enterCancel" text="Cancel" />
+      <Button layoutX="251.0" layoutY="386.0" mnemonicParsing="false" onAction="#sendData" onKeyPressed="#enterConfirm" text="Confirm" />
       <Label fx:id="errorEmail" layoutX="217.0" layoutY="41.0" text="Email is not valid!" textAlignment="CENTER" textFill="RED" underline="true" visible="false" />
       <Label fx:id="errorPassword1" layoutX="199.0" layoutY="225.0" text="Password are not equal!" textFill="RED" underline="true" visible="false" />
       <Label fx:id="errorPassword2" layoutX="197.0" layoutY="314.0" text="Password are not equal!" textFill="RED" underline="true" visible="false" />

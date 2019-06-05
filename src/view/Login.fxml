@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<AnchorPane onKeyPressed="#exit" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
       <TextField fx:id="username" alignment="CENTER" layoutX="66.0" layoutY="100.0" onKeyPressed="#enterFromField">
          <opaqueInsets>
@@ -16,8 +16,8 @@
          </opaqueInsets>
       </TextField>
       <PasswordField fx:id="password" layoutX="65.0" layoutY="170.0" onKeyPressed="#enterFromField" />
-      <Button fx:id="login" layoutX="111.0" layoutY="209.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="81.0" text="Login" />
-      <Button fx:id="register" layoutX="95.0" layoutY="307.0" mnemonicParsing="false" onAction="#registration" prefHeight="25.0" prefWidth="110.0" text="Register">
+      <Button fx:id="login" layoutX="111.0" layoutY="209.0" mnemonicParsing="false" onAction="#loginAction" onKeyPressed="#enterLogin" prefHeight="25.0" prefWidth="81.0" text="Login" />
+      <Button fx:id="register" layoutX="95.0" layoutY="307.0" mnemonicParsing="false" onAction="#registration" onKeyPressed="#enterRegister" prefHeight="25.0" prefWidth="110.0" text="Register">
          <opaqueInsets>
             <Insets bottom="150.0" top="150.0" />
          </opaqueInsets>
