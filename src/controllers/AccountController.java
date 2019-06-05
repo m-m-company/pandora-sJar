@@ -122,5 +122,13 @@ public class AccountController {
     	if(event.getCode() == KeyCode.ENTER)
     		changeImage(null);
     }
+    
+    @FXML
+    void exit(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ESCAPE) {
+    		Stage th = (Stage) username.getScene().getWindow();
+        	th.close();
+    	}
+    }
 
 }
