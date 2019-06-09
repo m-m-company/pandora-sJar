@@ -32,7 +32,8 @@ public class AddGameController {
 
     public void submit(ActionEvent actionEvent) {
         try {
-            DBConnection.inst().insertGame(new Game(name.getText(), path.getText()));
+        	if(path.getText() != "")
+        		DBConnection.inst().insertGame(new Game(name.getText(), path.getText()));
             app.refreshGamesList();
             cancel(null);
         } catch (SQLException e) {
@@ -44,14 +45,9 @@ public class AddGameController {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
         try {
-            System.out.println("a");
-            System.out.println(file.getAbsoluteFile().toURI().toURL().toExternalForm());
-            System.out.println("a");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            path.setText(file.toURI().toURL().toExternalForm());
+        	if(file != null) {
+        		path.setText(file.toURI().toURL().toExternalForm());
+        	}
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -1,9 +1,13 @@
 package controllers;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,7 +52,7 @@ public class AppController {
     private Button playButton;
 
     private User actualUser;
-
+    private Game actualGame;
     @FXML
     public void initialize() {
         refreshGamesList();
@@ -73,6 +77,10 @@ public class AppController {
         }
     }
 
+    public void setActualGame(Game g) {
+    	this.actualGame = g;
+    }
+    
     @FXML
     public void openAddGame() {
         Parent root;
@@ -134,21 +142,48 @@ public class AppController {
     }
 
 	public void showPreview(Game game) {
-		File f = new File(game.getPath());
+		StringTokenizer st = new StringTokenizer(game.getPath(),":");
+		st.nextToken();
+		File f = new File(st.nextToken());
         File h = new File(f.getParent() + File.separator + "media.mp4");
-        Media media = new Media("http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv");
+        Media media = null;
+		try {
+			System.out.println(h.toURI().toURL().toString());
+			media = new Media(h.toURI().toString());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(media.getError());
+		System.out.println(media.getMetadata());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
         preview.setMediaPlayer(mediaPlayer);
 	}
 	
 	@FXML
-    void exit(KeyEvent event) {
+    void shortcut(KeyEvent event) {
 		if(event.getCode() == KeyCode.ESCAPE) {
 			Stage th = (Stage) username.getScene().getWindow();
 			th.close();
 		}
+		if(event.isControlDown() && event.getCode() == KeyCode.N) {
+			openAddGame();
+		}
     }
+	
+	@FXML
+	void play(ActionEvent e) {
+		StringTokenizer st = new StringTokenizer(actualGame.getPath(),":");
+		st.nextToken();
+		ProcessBuilder pb = new ProcessBuilder("java", "-jar", st.nextToken(), "1");
+		try {
+			pb.start();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 	@FXML
     void enterAddGame(KeyEvent event) {
