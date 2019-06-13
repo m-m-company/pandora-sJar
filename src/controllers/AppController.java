@@ -142,20 +142,19 @@ public class AppController {
     }
 
 	public void showPreview(Game game) {
-		StringTokenizer st = new StringTokenizer(game.getPath(),":");
-		st.nextToken();
-		File f = new File(st.nextToken());
-        File h = new File(f.getParent() + File.separator + "media.mp4");
+		System.out.println(game.getPath());
+		String path = game.getPath().substring(6);
+		File f = new File(path);
+		File h = new File(f.getParent()+File.separator+"preview.mp4");
+		System.out.println(h.getPath());
         Media media = null;
 		try {
-			System.out.println(h.toURI().toURL().toString());
-			media = new Media(h.toURI().toString());
-		} catch (MalformedURLException e) {
+
+			media = new Media(h.toURI().toURL().toExternalForm());
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(media.getError());
-		System.out.println(media.getMetadata());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
