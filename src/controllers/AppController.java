@@ -1,14 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,9 +18,16 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+
 import model.DBConnection;
 import model.Game;
 import model.User;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class AppController {
 
