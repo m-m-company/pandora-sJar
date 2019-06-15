@@ -60,7 +60,7 @@ public class DBConnection {
 		query = "CREATE TABLE IF NOT EXISTS " +
 				"games(" +
 					"name varchar(500) primary key," +
-					"path varchar(255)" +
+					"path varchar(255)"+
 				");";
 		stmt.executeUpdate(query);
 		query = "CREATE TABLE IF NOT EXISTS " +
@@ -135,9 +135,9 @@ public class DBConnection {
 		while(rs.next()){
 			pstmt.setString(1, rs.getString(1));
 			ResultSet ranks = pstmt.executeQuery();
-			HashMap<String, Integer> rank = new HashMap<>();
+			ArrayList<Pair<String, Integer>> rank = new ArrayList<>();
 			while(ranks.next()){
-				rank.put(ranks.getString(1), ranks.getInt(3));
+				rank.add(new Pair<String,Integer>(ranks.getString(1), ranks.getInt(2)));
 			}
 			games.add(new Game(rs.getString(1),rs.getString(2), rank));
 		}
@@ -146,6 +146,14 @@ public class DBConnection {
 		return games;
 	}
 
-
+	public void insertPoints(Game game, User user, Integer points) throws SQLException{
+		String query = "Insert into ranks values (?,?,?)";
+		PreparedStatement pstmt = con.prepareStatement(query);
+		pstmt.setInt(1, user.getId());
+		pstmt.setString(2, game.getName());
+		pstmt.setInt(3,points);
+		pstmt.execute();
+		pstmt.close();
+	}
 
 }

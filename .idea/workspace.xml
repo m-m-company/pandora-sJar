@@ -2,11 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e2ea691-3035-4c50-ad66-94a13cd6178a" name="Default" comment="Can't catch the nullpointerException">
+      <change afterPath="$PROJECT_DIR$/src/model/Pair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/media.mp4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/tetris.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pandora-sJar/view/AddGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pandora-sJar/view/AddGame.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pandora-sJar/view/App.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pandora-sJar/view/App.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/AddGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/AddGameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/DBConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/AddGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/AddGame.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/App.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/App.fxml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +30,33 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controllers/AppController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-221">
-              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            <state relative-caret-position="122">
+              <caret line="131" selection-start-line="131" selection-end-line="131" />
+              <folding>
+                <element signature="method#initialize#0;class#AppController#0" />
+                <element signature="method#add#0;class#AppController#0" />
+                <element signature="method#openAddGame#0;class#AppController#0" />
+                <element signature="method#refreshGamesList#0;class#AppController#0" />
+                <element signature="class#3331:3480" />
+                <element signature="method#init#0;class#AppController#0" />
+                <element signature="method#refreshAccount#0;class#AppController#0" />
+                <element signature="method#manageAccount#0;class#AppController#0" />
+                <element signature="method#showPreview#0;class#AppController#0" />
+                <element signature="method#shortcut#0;class#AppController#0" />
+                <element signature="method#play#0;class#AppController#0" />
+                <element signature="method#enterAddGame#0;class#AppController#0" />
+                <element signature="method#enterManageAccount#0;class#AppController#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/App.fxml">
+          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="310">
+              <caret line="88" column="31" lean-forward="true" selection-start-line="88" selection-start-column="31" selection-end-line="88" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -55,12 +87,13 @@
         <option value="$PROJECT_DIR$/src/sample/Controller.java" />
         <option value="$PROJECT_DIR$/src/controllers/Game.java" />
         <option value="$PROJECT_DIR$/src/database/Game.java" />
-        <option value="$PROJECT_DIR$/src/view/AddGame.fxml" />
-        <option value="$PROJECT_DIR$/src/model/Game.java" />
         <option value="$PROJECT_DIR$/src/controllers/LoginController.java" />
-        <option value="$PROJECT_DIR$/src/model/DBConnection.java" />
         <option value="$PROJECT_DIR$/src/view/Game.fxml" />
         <option value="$PROJECT_DIR$/src/controllers/AddGameController.java" />
+        <option value="$PROJECT_DIR$/src/model/DBConnection.java" />
+        <option value="$PROJECT_DIR$/src/view/AddGame.fxml" />
+        <option value="$PROJECT_DIR$/src/model/Game.java" />
+        <option value="$PROJECT_DIR$/src/model/Pair.java" />
         <option value="$PROJECT_DIR$/src/controllers/GameController.java" />
         <option value="$PROJECT_DIR$/src/view/App.fxml" />
         <option value="$PROJECT_DIR$/src/controllers/AppController.java" />
@@ -81,6 +114,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -88,12 +122,34 @@
               <item name="pandora-sJar" type="b2602c69:ProjectViewProjectNode" />
               <item name="pandora-sJar" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="pandora-sJar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pandora-sJar" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pandora-sJar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pandora-sJar" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pandora-sJar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pandora-sJar" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pandora-sJar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pandora-sJar" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -218,7 +274,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18230277" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.108208954" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -226,15 +282,15 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49733475" weight="0.32827735" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.58528787" weight="0.22643554" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49923196" weight="0.39903846" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49626866" weight="0.32827735" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.58102345" weight="0.22643554" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49840087" weight="0.39869988" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49840087" weight="0.032502707" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49923196" weight="0.32852563" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5026652" side_tool="true" visible="true" weight="0.22643554" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.41897655" side_tool="true" visible="true" weight="0.22643554" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49769586" weight="0.32852563" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -327,20 +383,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/Login.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
           <caret line="28" column="70" selection-start-line="28" selection-start-column="70" selection-end-line="28" selection-end-column="70" />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/AddGame.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="107" selection-start-line="14" selection-start-column="107" selection-end-line="14" selection-end-column="107" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.27.2.1.jar!/org/sqlite/jdbc4/JDBC4PreparedStatement.class">
       <provider selected="true" editor-type-id="text-editor">
@@ -385,26 +433,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/DBConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="78" column="74" selection-start-line="78" selection-start-column="27" selection-end-line="78" selection-end-column="74" />
-          <folding>
-            <element signature="method#inst#0;class#DBConnection#0" />
-            <element signature="method#closeConnection#0;class#DBConnection#0" />
-            <element signature="method#login#0;class#DBConnection#0" />
-            <element signature="method#changeDataUser#0;class#DBConnection#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/view/Game.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="158" lean-forward="true" selection-start-line="6" selection-start-column="158" selection-end-line="6" selection-end-column="158" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controllers/LoginController.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -420,39 +455,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controllers/AddGameController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="51" column="60" selection-start-line="51" selection-start-column="60" selection-end-line="51" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controllers/GameController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/playIcon.jpg" />
-    <entry file="file://$PROJECT_DIR$/src/view/App.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/FileSystem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
@@ -470,10 +473,102 @@
     <entry file="file://$PROJECT_DIR$/untitled.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controllers/AddGameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-48">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="method#browse#0;class#AddGameController#0" />
+            <element signature="method#enterCancel#0;class#AddGameController#0" />
+            <element signature="method#enterBrowse#0;class#AddGameController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/DBConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="133" column="48" lean-forward="true" selection-start-line="133" selection-start-column="48" selection-end-line="133" selection-end-column="48" />
+          <folding>
+            <element signature="method#DBConnection#0;class#DBConnection#0" />
+            <element signature="method#inst#0;class#DBConnection#0" />
+            <element signature="method#createConnection#0;class#DBConnection#0" />
+            <element signature="method#closeConnection#0;class#DBConnection#0" />
+            <element signature="method#createTables#0;class#DBConnection#0" />
+            <element signature="method#insertUser#0;class#DBConnection#0" />
+            <element signature="method#login#0;class#DBConnection#0" />
+            <element signature="method#changeDataUser#0;class#DBConnection#0" />
+            <element signature="method#insertGame#0;class#DBConnection#0" />
+            <element signature="method#insertPoints#0;class#DBConnection#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Pair.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="24" column="51" lean-forward="true" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
+          <folding>
+            <element signature="e#270#271#0" expanded="true" />
+            <element signature="e#290#291#0" expanded="true" />
+            <element signature="e#330#331#0" expanded="true" />
+            <element signature="e#346#347#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/AddGame.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="3" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controllers/GameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="37" column="37" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/App.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="88" column="31" lean-forward="true" selection-start-line="88" selection-start-column="31" selection-end-line="88" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/controllers/AppController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-221">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        <state relative-caret-position="122">
+          <caret line="131" selection-start-line="131" selection-end-line="131" />
+          <folding>
+            <element signature="method#initialize#0;class#AppController#0" />
+            <element signature="method#add#0;class#AppController#0" />
+            <element signature="method#openAddGame#0;class#AppController#0" />
+            <element signature="method#refreshGamesList#0;class#AppController#0" />
+            <element signature="class#3331:3480" />
+            <element signature="method#init#0;class#AppController#0" />
+            <element signature="method#refreshAccount#0;class#AppController#0" />
+            <element signature="method#manageAccount#0;class#AppController#0" />
+            <element signature="method#showPreview#0;class#AppController#0" />
+            <element signature="method#shortcut#0;class#AppController#0" />
+            <element signature="method#play#0;class#AppController#0" />
+            <element signature="method#enterAddGame#0;class#AppController#0" />
+            <element signature="method#enterManageAccount#0;class#AppController#0" />
+          </folding>
         </state>
       </provider>
     </entry>

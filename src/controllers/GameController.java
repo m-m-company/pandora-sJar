@@ -36,8 +36,8 @@ public class GameController {
     
     @FXML
     void showGame(MouseEvent event) {
+        appController.setActualGame(game);
     	appController.showPreview(game);
-    	appController.setActualGame(game);
     }
 
 }

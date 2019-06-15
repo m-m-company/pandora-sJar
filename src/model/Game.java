@@ -1,18 +1,18 @@
 package model;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 public class Game {
 
     private String name;
     private String path;
-    private Map<String,Integer> ranks;
+    private ArrayList<Pair<String,Integer>> ranks;
 
     public String getPath() {
         return path;
     }
 
-    public Game(String name, String path, Map<String, Integer> ranks) {
+    public Game(String name, String path, ArrayList<Pair<String,Integer>> ranks) {
         this.name = name;
         this.path = path;
         this.ranks = ranks;
@@ -25,11 +25,11 @@ public class Game {
         this.path = path;
     }
 
-    public Map<String, Integer> getRanks() {
+    public ArrayList<Pair<String, Integer>> getRanks() {
         return ranks;
     }
 
-    public void setRanks(Map<String, Integer> ranks) {
+    public void setRanks(ArrayList<Pair<String, Integer>> ranks) {
         this.ranks = ranks;
     }
 

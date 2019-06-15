@@ -20,7 +20,7 @@ public class AddGameController {
     @FXML
     public TextField path;
 
-    private AppController app;
+	private AppController app;
 
     public AppController getApp() {
         return app;
@@ -89,5 +89,4 @@ public class AddGameController {
     	if(event.getCode() == KeyCode.ENTER)
     		browse(null);
     }
-
 }
