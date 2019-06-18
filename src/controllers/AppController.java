@@ -121,7 +121,7 @@ public class AppController {
 		actualGame.getRanks().sort(new Comparator<Pair<String, Integer>>() {
 			@Override
 			public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
-				return Integer.compare(o1.getSecond(), o2.getSecond());
+				return Integer.compare(o2.getSecond(),o1.getSecond());
 			}
 		});
 		for (int i = 0; i < actualGame.getRanks().size(); i++) {
@@ -161,6 +161,7 @@ public class AppController {
 
 	public void showPreview(Game game) {
 		/*
+		 * La prossima volta che qualcuno mi dice che java è perfettamente portabile giuro che gli sputo in bocca
 		 * System.out.println(game.getPath()); String path =
 		 * game.getPath().substring(6); File f = new File(path); File h = new
 		 * File(f.getParent()+File.separator+"preview.mp4");
@@ -189,10 +190,19 @@ public class AppController {
 	@FXML
 	void play(ActionEvent e) {
 		Stage me = (Stage) username.getScene().getWindow();
-		me.close();
-		String pathGame = actualGame.getPath().substring(5);
+		me.setIconified(true);
+		String pathGame;
+
+		//JVM, am I a joke to you?
+		String so = System.getProperty("os.name");
+		if(so.contains("Windows"))
+			pathGame= actualGame.getPath().substring(6);
+		else
+			pathGame = actualGame.getPath().substring(5);
+
 		String pathPoints = new File(pathGame).getParent();
 		ProcessBuilder pb = new ProcessBuilder("java", "-jar", pathGame, "1");
+		System.out.println(pathGame);
 		try {
 			File pointsFile = new File(pathPoints + File.separator + "points.txt");
 			pb.redirectOutput(pointsFile);
@@ -201,10 +211,12 @@ public class AppController {
 			BufferedReader bf = new BufferedReader(new FileReader(pointsFile));
 			Integer points = Integer.valueOf(bf.readLine());
 			DBConnection.inst().insertPoints(actualGame, actualUser, points);
+			actualGame.getRanks().add(new Pair<>(actualUser.getUsername(), points));
 			refreshRanks();
-			me.show();
+			me.setIconified(false);
 		} catch (Exception e1) {
 			try {
+				e1.printStackTrace();
 				DBConnection.inst().insertPoints(actualGame, actualUser, 0);
 			} catch (SQLException e2) {
 				e2.printStackTrace();
