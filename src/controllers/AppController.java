@@ -223,5 +223,28 @@ public class AppController {
 		if (event.getCode() == KeyCode.ENTER)
 			manageAccount(null);
 	}
+	
+	@FXML
+    void enterPlay(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			play(null);
+    }
 
+	@FXML
+	void removeGame(ActionEvent event) {
+		try {
+			DBConnection.inst().removeGame(actualGame);
+			this.refreshGamesList();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+    void enterRemoveGame(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			removeGame(null);
+    }
+
+	
 }

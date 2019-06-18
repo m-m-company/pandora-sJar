@@ -122,6 +122,14 @@ public class DBConnection {
 		pstmt.execute();
 		pstmt.close();
 	}
+	
+	public void removeGame(Game g) throws SQLException {
+		String query = "DELETE FROM games WHERE name=?";
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, g.getName());
+		stmt.execute();
+		stmt.close();
+	}
 
 	public ArrayList<Game> getGames() throws SQLException {
 		ArrayList<Game> games = new ArrayList<>();
