@@ -212,15 +212,15 @@ public class AppController {
 			Integer points = Integer.valueOf(bf.readLine());
 			DBConnection.inst().insertPoints(actualGame, actualUser, points);
 			actualGame.getRanks().add(new Pair<>(actualUser.getUsername(), points));
-			refreshRanks();
-			me.setIconified(false);
 		} catch (Exception e1) {
 			try {
-				e1.printStackTrace();
 				DBConnection.inst().insertPoints(actualGame, actualUser, 0);
 			} catch (SQLException e2) {
 				e2.printStackTrace();
 			}
+		}finally {
+			refreshRanks();
+			me.setIconified(false);
 		}
 	}
 
