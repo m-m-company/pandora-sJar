@@ -193,16 +193,17 @@ public class AppController {
 
 	@FXML
 	void play(ActionEvent e) {
-		Stage me = (Stage) username.getScene().getWindow();
-		me.setIconified(true);
-		String pathGame;
+		if(actualGame != null) {
+			Stage me = (Stage) username.getScene().getWindow();
+			//me.setIconified(true);
+			String pathGame;
 
-		//JVM, am I a joke to you?
-		String so = System.getProperty("os.name");
-		if(so.contains("Windows"))
-			pathGame= actualGame.getPath().substring(6);
-		else
-			pathGame = actualGame.getPath().substring(5);
+			//JVM, am I a joke to you?
+			String so = System.getProperty("os.name");
+			if(so.contains("Windows"))
+				pathGame= actualGame.getPath().substring(6);
+			else
+				pathGame = actualGame.getPath().substring(5);
 
 		String pathPoints = new File(pathGame).getParent();
 		ProcessBuilder pb = new ProcessBuilder("java", "-jar", pathGame);
@@ -224,15 +225,27 @@ public class AppController {
 			actualGame.getRanks().add(new Pair<>(actualUser.getUsername(), points));
 		} catch (Exception e1) {
 			try {
-				DBConnection.inst().insertPoints(actualGame, actualUser, 0);
-			} catch (SQLException e2) {
-				e2.printStackTrace();
+				File pointsFile = new File(pathPoints + File.separator + "points.txt");
+				pb.redirectOutput(pointsFile);
+				Process p = pb.start();
+				p.waitFor();
+				BufferedReader bf = new BufferedReader(new FileReader(pointsFile));
+				Integer points = Integer.valueOf(bf.readLine());
+				DBConnection.inst().insertPoints(actualGame, actualUser, points);
+				actualGame.getRanks().add(new Pair<>(actualUser.getUsername(), points));
+			} catch (Exception e1) {
+				try {
+					DBConnection.inst().insertPoints(actualGame, actualUser, 0);
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+			}finally {
+				refreshRanks();
+				//me.setIconified(false);
 			}
-		}finally {
-			refreshRanks();
-			me.setIconified(false);
 		}
 	}
+}
 
 	@FXML
 	void enterAddGame(KeyEvent event) {
@@ -254,11 +267,15 @@ public class AppController {
 
 	@FXML
 	void removeGame(ActionEvent event) {
-		try {
-			DBConnection.inst().removeGame(actualGame);
-			this.refreshGamesList();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(actualGame != null) {
+			try {
+				DBConnection.inst().removeGame(actualGame);
+				actualGame = null;
+				this.refreshGamesList();
+				this.refreshRanks();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
