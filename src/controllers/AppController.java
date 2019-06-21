@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Map;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,6 +60,7 @@ public class AppController {
 	@FXML
 	public void initialize() {
 		refreshGamesList();
+		this.playButton.setDisable(true);
 		playButton.setGraphic(
 				new ImageView(new Image("file:" + Main.resourcesPath + "playButton.png", 40, 40, false, false)));
 		gameList.prefWidthProperty().bind(scrollPane.widthProperty());
@@ -161,18 +163,20 @@ public class AppController {
 
 	public void showPreview(Game game) {
 		/*
-		 * La prossima volta che qualcuno mi dice che java è perfettamente portabile giuro che gli sputo in bocca
+		 * TODO: La prossima volta che qualcuno mi dice che java è perfettamente portabile giuro che gli sputo in bocca
+		 * FIXME: perdindirindina
 		 * System.out.println(game.getPath()); String path =
 		 * game.getPath().substring(6); File f = new File(path); File h = new
 		 * File(f.getParent()+File.separator+"preview.mp4");
 		 * 
 		 * Media media = null; try {
 		 * System.out.println(h.toURI().toURL().toExternalForm()); media = new
-		 * Media(h.toURI().toURL().toExternalForm()); } catch (Exception e) { // TODO
+		 * Media(h.toURI().toURL().toExternalForm()); } catch (Exception e) {
 		 * Auto-generated catch block e.printStackTrace(); } MediaPlayer mediaPlayer =
 		 * new MediaPlayer(media); mediaPlayer.setAutoPlay(true); mediaPlayer.play();
 		 * preview.setMediaPlayer(mediaPlayer);
 		 */
+		this.playButton.setDisable(false);
 		refreshRanks();
 	}
 
@@ -201,7 +205,13 @@ public class AppController {
 			pathGame = actualGame.getPath().substring(5);
 
 		String pathPoints = new File(pathGame).getParent();
-		ProcessBuilder pb = new ProcessBuilder("java", "-jar", pathGame, "1");
+		ProcessBuilder pb = new ProcessBuilder("java", "-jar", pathGame);
+		Map<String,String> env = pb.environment();
+
+		//Odi et amo java
+		env.put("pandoras_Username", actualUser.getUsername());
+		env.put("pandoras_HighUser", actualGame.getRanks().get(0).getFirst());
+		env.put("pandoras_Highscore", actualGame.getRanks().get(0).getSecond().toString());
 		System.out.println(pathGame);
 		try {
 			File pointsFile = new File(pathPoints + File.separator + "points.txt");
