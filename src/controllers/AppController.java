@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -118,17 +117,27 @@ public class AppController {
 
 	public void refreshRanks() {
 		gridPane.getChildren().clear();
-		actualGame.getRanks().sort(new Comparator<Pair<String, Integer>>() {
-			@Override
-			public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
-				return Integer.compare(o2.getSecond(),o1.getSecond());
+		try {
+			Pair<String, String> record = DBConnection.inst().getPoints(actualGame);
+			if(record.getFirst() != null && record.getSecond() != null) {
+				Label username = new Label(record.getFirst());
+				Label points = new Label(record.getSecond());
+				gridPane.addRow(0, new Label("1"), username, points);
 			}
-		});
-		for (int i = 0; i < actualGame.getRanks().size(); i++) {
-			Label userName = new Label(actualGame.getRanks().get(i).getFirst());
-			Label points = new Label(actualGame.getRanks().get(i).getSecond().toString());
-			gridPane.addRow(i, new Label(Integer.toString(i + 1)), userName, points);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+//		actualGame.getRanks().sort(new Comparator<Pair<String, Integer>>() {
+//			@Override
+//			public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
+//				return Integer.compare(o2.getSecond(),o1.getSecond());
+//			}
+//		});
+//		for (int i = 0; i < actualGame.getRanks().size(); i++) {
+//			Label userName = new Label(actualGame.getRanks().get(i).getFirst());
+//			Label points = new Label(actualGame.getRanks().get(i).getSecond().toString());
+//			gridPane.addRow(i, new Label(Integer.toString(i + 1)), userName, points);
+//		}
 		gridPane.setAlignment(Pos.CENTER_RIGHT); // cambia se vuoi
 	}
 
@@ -190,39 +199,92 @@ public class AppController {
 	@FXML
 	void play(ActionEvent e) {
 		if(actualGame != null) {
-			Stage me = (Stage) username.getScene().getWindow();
-			//me.setIconified(true);
 			String pathGame;
-
-			//JVM, am I a joke to you?
 			String so = System.getProperty("os.name");
 			if(so.contains("Windows"))
 				pathGame= actualGame.getPath().substring(6);
 			else
 				pathGame = actualGame.getPath().substring(5);
-
-			String pathPoints = new File(pathGame).getParent();
-			ProcessBuilder pb = new ProcessBuilder("java", "-jar", pathGame, "1");
-			System.out.println(pathGame);
+			ProcessBuilder pb = null;
 			try {
+				Pair<String, String> record = DBConnection.inst().getPoints(actualGame);
+				String highUser = record.getFirst();
+				String highScore = record.getSecond();
+				pb = new ProcessBuilder("java", "-jar", pathGame, "1");
+				if(highUser != null && highScore != null) {
+					pb.environment().put("pandoras_HighUser", highUser);
+					pb.environment().put("pandoras_HighScore", highScore);
+				}
+				else {
+					pb.environment().put("pandoras_HighUser", "YOU");
+					pb.environment().put("pandoras_HighScore", "0");
+				}
+				pb.environment().put("pandoras_ActualUser", actualUser.getUsername());
+				String pathPoints = new File(pathGame).getParent();
 				File pointsFile = new File(pathPoints + File.separator + "points.txt");
-				pb.redirectOutput(pointsFile);
+				pb.redirectOutput(pointsFile);//QUESTA COSA NON FUNZIONA?
 				Process p = pb.start();
 				p.waitFor();
 				BufferedReader bf = new BufferedReader(new FileReader(pointsFile));
-				Integer points = Integer.valueOf(bf.readLine());
-				DBConnection.inst().insertPoints(actualGame, actualUser, points);
-				actualGame.getRanks().add(new Pair<>(actualUser.getUsername(), points));
-			} catch (Exception e1) {
-				try {
-					DBConnection.inst().insertPoints(actualGame, actualUser, 0);
-				} catch (SQLException e2) {
-					e2.printStackTrace();
+				if(bf.ready()) {
+					Integer points = Integer.valueOf(bf.readLine());
+					DBConnection.inst().changeHighScore(actualGame, actualUser, points);
+					refreshRanks();
 				}
-			}finally {
-				refreshRanks();
-				//me.setIconified(false);
+				bf.close();
+			} catch (SQLException | IOException | InterruptedException e1) {
+				e1.printStackTrace();
 			}
+			
+//			Stage me = (Stage) username.getScene().getWindow();
+//			me.setIconified(true);
+//			String pathGame;
+//			String highUser;
+//			String highPoints;
+//			String newScore;
+//
+//			//JVM, am I a joke to you?
+//			String so = System.getProperty("os.name");
+//			if(so.contains("Windows"))
+//				pathGame= actualGame.getPath().substring(6);
+//			else
+//				pathGame = actualGame.getPath().substring(5);
+//			ProcessBuilder pb = null;
+//			try {
+//				Pair<String, String> record = DBConnection.inst().getPoints(actualGame);
+//				highUser = record.getFirst();
+//				highPoints = record.getSecond();
+//				pb = new ProcessBuilder("java", "-jar", pathGame, "1");
+//				pb.environment().put("pandoras_HighUser", highUser);
+//				pb.environment().put("pandoras_HighScore", highPoints);
+//				pb.environment().put("pandoras_ActualUser", actualUser.getUsername());
+//			} catch (SQLException e3) {
+//				e3.printStackTrace();
+//			}
+//			String pathPoints = new File(pathGame).getParent();
+//			try {
+////				File pointsFile = new File(pathPoints + File.separator + "points.txt");
+////				pb.redirectOutput(pointsFile);
+//				Process p = pb.start();
+//				p.waitFor();
+////				BufferedReader bf = new BufferedReader(new FileReader(pointsFile));
+////				Integer points = Integer.valueOf(bf.readLine());
+//				newScore = pb.environment().get("pandoras_HighScore");
+//				if(newScore != highPoints) {
+//					DBConnection.inst().insertPoints(actualGame, actualUser, Integer.parseInt(newScore));
+////					actualGame.getRanks().add(new Pair<>(actualUser.getUsername(), points));
+//				}
+////				bf.close();
+//			} catch (Exception e1) {
+//				try {
+//					DBConnection.inst().insertPoints(actualGame, actualUser, 0);
+//				} catch (SQLException e2) {
+//					e2.printStackTrace();
+//				}
+//			}finally {
+//				refreshRanks();
+//				me.setIconified(false);
+//			}
 		}
 	}
 
@@ -251,7 +313,7 @@ public class AppController {
 				DBConnection.inst().removeGame(actualGame);
 				actualGame = null;
 				this.refreshGamesList();
-				this.refreshRanks();
+				gridPane.getChildren().clear();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
