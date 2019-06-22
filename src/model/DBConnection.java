@@ -158,7 +158,7 @@ public class DBConnection {
 		return games;
 	}
 
-	private void insertPoints(Game game, User user, Integer points) throws SQLException {
+	public void insertPoints(Game game, User user, Integer points) throws SQLException {
 		String query = "Insert into ranks values (?,?,?)";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setInt(1, user.getId());
@@ -168,41 +168,40 @@ public class DBConnection {
 		pstmt.close();
 	}
 	
-	private boolean hasARecord(Game game) throws SQLException {
-		String query = "SELECT * FROM ranks WHERE game=?";
-		PreparedStatement pstmt = con.prepareStatement(query);
-		pstmt.setString(1, game.getName());
-		ResultSet rs = pstmt.executeQuery();
-		return rs.next();
-	}
+//	private boolean hasARecord(Game game) throws SQLException {
+//		String query = "SELECT * FROM ranks WHERE game=?";
+//		PreparedStatement pstmt = con.prepareStatement(query);
+//		pstmt.setString(1, game.getName());
+//		ResultSet rs = pstmt.executeQuery();
+//		return rs.next();
+//	}
+//	
+//	public void changeHighScore(Game game, User user, Integer points) throws SQLException {
+//		if(hasARecord(game)) {
+//			String query = "UPDATE ranks " + 
+//						   "SET idplayer=?, points=? " +
+//						   "WHERE game=?;";
+//			PreparedStatement pstmt = con.prepareStatement(query);
+//			pstmt.setInt(1, user.getId());
+//			pstmt.setInt(2, points);
+//			pstmt.setString(3, game.getName());
+//			pstmt.executeUpdate();
+//			pstmt.close();
+//		}
+//		else
+//			insertPoints(game, user, points);
+//	}
 	
-	public void changeHighScore(Game game, User user, Integer points) throws SQLException {
-		if(hasARecord(game)) {
-			String query = "UPDATE ranks " + 
-						   "SET idplayer=?, points=? " +
-						   "WHERE game=?;";
-			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, user.getId());
-			pstmt.setInt(2, points);
-			pstmt.setString(3, game.getName());
-			pstmt.executeUpdate();
-			pstmt.close();
-		}
-		else
-			insertPoints(game, user, points);
-	}
-	
-	public Pair<String, String> getPoints(Game game) throws SQLException {
-		Pair<String, String> pair = new Pair<String, String>(null, null);
+	public ArrayList<Pair<String, Integer>> getPoints(Game game) throws SQLException {
+		ArrayList<Pair<String, Integer>> pairs = new ArrayList<Pair<String,Integer>>();
 		String query = "SELECT users.username, ranks.points FROM users, ranks WHERE game=? AND id=idplayer;";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setString(1, game.getName());
 		ResultSet rs = pstmt.executeQuery();
-		if(rs.next()) {
-			pair.first = rs.getString(1);
-			pair.second = rs.getString(2);
+		while(rs.next()) {
+			pairs.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
 		}
-		return pair;
+		return pairs;
 	}
 
 }
