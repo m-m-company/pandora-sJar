@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Map;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,7 +60,6 @@ public class AppController {
 	@FXML
 	public void initialize() {
 		refreshGamesList();
-		this.playButton.setDisable(true);
 		playButton.setGraphic(
 				new ImageView(new Image("file:" + Main.resourcesPath + "playButton.png", 40, 40, false, false)));
 		gameList.prefWidthProperty().bind(scrollPane.widthProperty());
@@ -120,16 +119,25 @@ public class AppController {
 
 	public void refreshRanks() {
 		gridPane.getChildren().clear();
+		try {
+			actualGame.setRanks(DBConnection.inst().getPoints(actualGame));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		actualGame.getRanks().sort(new Comparator<Pair<String, Integer>>() {
 			@Override
 			public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
 				return Integer.compare(o2.getSecond(),o1.getSecond());
 			}
 		});
-		for (int i = 0; i < actualGame.getRanks().size(); i++) {
-			Label userName = new Label(actualGame.getRanks().get(i).getFirst());
-			Label points = new Label(actualGame.getRanks().get(i).getSecond().toString());
-			gridPane.addRow(i, new Label(Integer.toString(i + 1)), userName, points);
+		for (int i = 0; i < 5; i++) {
+			try {
+				Label userName = new Label(i+1 + ". " + actualGame.getRanks().get(i).getFirst());
+				Label points = new Label(actualGame.getRanks().get(i).getSecond().toString());
+				gridPane.addRow(i, userName, points);
+			} catch(IndexOutOfBoundsException a) {
+				i = 5;
+			}
 		}
 		gridPane.setAlignment(Pos.CENTER_RIGHT); // cambia se vuoi
 	}
@@ -163,20 +171,18 @@ public class AppController {
 
 	public void showPreview(Game game) {
 		/*
-		 * TODO: La prossima volta che qualcuno mi dice che java è perfettamente portabile giuro che gli sputo in bocca
-		 * FIXME: perdindirindina
+		 * La prossima volta che qualcuno mi dice che java è perfettamente portabile giuro che gli sputo in bocca
 		 * System.out.println(game.getPath()); String path =
 		 * game.getPath().substring(6); File f = new File(path); File h = new
 		 * File(f.getParent()+File.separator+"preview.mp4");
 		 * 
 		 * Media media = null; try {
 		 * System.out.println(h.toURI().toURL().toExternalForm()); media = new
-		 * Media(h.toURI().toURL().toExternalForm()); } catch (Exception e) {
+		 * Media(h.toURI().toURL().toExternalForm()); } catch (Exception e) { // TODO
 		 * Auto-generated catch block e.printStackTrace(); } MediaPlayer mediaPlayer =
 		 * new MediaPlayer(media); mediaPlayer.setAutoPlay(true); mediaPlayer.play();
 		 * preview.setMediaPlayer(mediaPlayer);
 		 */
-		this.playButton.setDisable(false);
 		refreshRanks();
 	}
 
@@ -194,37 +200,35 @@ public class AppController {
 	@FXML
 	void play(ActionEvent e) {
 		if(actualGame != null) {
-			Stage me = (Stage) username.getScene().getWindow();
-			//me.setIconified(true);
 			String pathGame;
-
-			//JVM, am I a joke to you?
 			String so = System.getProperty("os.name");
 			if(so.contains("Windows"))
 				pathGame= actualGame.getPath().substring(6);
 			else
 				pathGame = actualGame.getPath().substring(5);
-
-		String pathPoints = new File(pathGame).getParent();
-		ProcessBuilder pb = new ProcessBuilder("java", "-jar", pathGame);
-		Map<String,String> env = pb.environment();
-
-		//Odi et amo java
-		env.put("pandoras_Username", actualUser.getUsername());
-		env.put("pandoras_HighUser", actualGame.getRanks().get(0).getFirst());
-		env.put("pandoras_Highscore", actualGame.getRanks().get(0).getSecond().toString());
-		System.out.println(pathGame);
-		try {
-			File pointsFile = new File(pathPoints + File.separator + "points.txt");
-			pb.redirectOutput(pointsFile);
-			Process p = pb.start();
-			p.waitFor();
-			BufferedReader bf = new BufferedReader(new FileReader(pointsFile));
-			Integer points = Integer.valueOf(bf.readLine());
-			DBConnection.inst().insertPoints(actualGame, actualUser, points);
-			actualGame.getRanks().add(new Pair<>(actualUser.getUsername(), points));
-		} catch (Exception e1) {
+			ProcessBuilder pb = null;
 			try {
+				String highUser;
+				Integer highScore;
+				try {
+					Pair<String, Integer> record = actualGame.getRanks().get(0);
+					highUser = record.getFirst();
+					highScore = record.getSecond();
+				} catch (IndexOutOfBoundsException a) {
+					highUser = actualUser.getUsername();
+					highScore = 0;
+				}
+				pb = new ProcessBuilder("java", "-jar", pathGame, "1");
+				if(highUser != null && highScore != null) {
+					pb.environment().put("pandoras_HighUser", highUser);
+					pb.environment().put("pandoras_HighScore", Integer.toString(highScore));
+				}
+				else {
+					pb.environment().put("pandoras_HighUser", "YOU");
+					pb.environment().put("pandoras_HighScore", "0");
+				}
+				pb.environment().put("pandoras_ActualUser", actualUser.getUsername());
+				String pathPoints = new File(pathGame).getParent();
 				File pointsFile = new File(pathPoints + File.separator + "points.txt");
 				pb.redirectOutput(pointsFile);
 				Process p = pb.start();
@@ -232,20 +236,16 @@ public class AppController {
 				BufferedReader bf = new BufferedReader(new FileReader(pointsFile));
 				Integer points = Integer.valueOf(bf.readLine());
 				DBConnection.inst().insertPoints(actualGame, actualUser, points);
-				actualGame.getRanks().add(new Pair<>(actualUser.getUsername(), points));
-			} catch (Exception e1) {
-				try {
-					DBConnection.inst().insertPoints(actualGame, actualUser, 0);
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				}
-			}finally {
 				refreshRanks();
-				//me.setIconified(false);
+				PrintWriter pw = new PrintWriter(pointsFile);
+				pw.write("");
+				pw.close();
+				bf.close();
+			} catch (SQLException | IOException | InterruptedException e1) {
+				e1.printStackTrace();
 			}
 		}
 	}
-}
 
 	@FXML
 	void enterAddGame(KeyEvent event) {
@@ -264,6 +264,7 @@ public class AppController {
 		if(event.getCode() == KeyCode.ENTER)
 			play(null);
     }
+	
 
 	@FXML
 	void removeGame(ActionEvent event) {
@@ -272,12 +273,13 @@ public class AppController {
 				DBConnection.inst().removeGame(actualGame);
 				actualGame = null;
 				this.refreshGamesList();
-				this.refreshRanks();
+				gridPane.getChildren().clear();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 	}
+	
 	
 	@FXML
     void enterRemoveGame(KeyEvent event) {

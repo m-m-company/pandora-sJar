@@ -1,8 +1,12 @@
 package model;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import controllers.Main;
 
@@ -154,7 +158,7 @@ public class DBConnection {
 		return games;
 	}
 
-	public void insertPoints(Game game, User user, Integer points) throws SQLException{
+	public void insertPoints(Game game, User user, Integer points) throws SQLException {
 		String query = "Insert into ranks values (?,?,?)";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setInt(1, user.getId());
@@ -162,6 +166,42 @@ public class DBConnection {
 		pstmt.setInt(3,points);
 		pstmt.execute();
 		pstmt.close();
+	}
+	
+//	private boolean hasARecord(Game game) throws SQLException {
+//		String query = "SELECT * FROM ranks WHERE game=?";
+//		PreparedStatement pstmt = con.prepareStatement(query);
+//		pstmt.setString(1, game.getName());
+//		ResultSet rs = pstmt.executeQuery();
+//		return rs.next();
+//	}
+//	
+//	public void changeHighScore(Game game, User user, Integer points) throws SQLException {
+//		if(hasARecord(game)) {
+//			String query = "UPDATE ranks " + 
+//						   "SET idplayer=?, points=? " +
+//						   "WHERE game=?;";
+//			PreparedStatement pstmt = con.prepareStatement(query);
+//			pstmt.setInt(1, user.getId());
+//			pstmt.setInt(2, points);
+//			pstmt.setString(3, game.getName());
+//			pstmt.executeUpdate();
+//			pstmt.close();
+//		}
+//		else
+//			insertPoints(game, user, points);
+//	}
+	
+	public ArrayList<Pair<String, Integer>> getPoints(Game game) throws SQLException {
+		ArrayList<Pair<String, Integer>> pairs = new ArrayList<Pair<String,Integer>>();
+		String query = "SELECT users.username, ranks.points FROM users, ranks WHERE game=? AND id=idplayer;";
+		PreparedStatement pstmt = con.prepareStatement(query);
+		pstmt.setString(1, game.getName());
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()) {
+			pairs.add(new Pair<String, Integer>(rs.getString(1), rs.getInt(2)));
+		}
+		return pairs;
 	}
 
 }
