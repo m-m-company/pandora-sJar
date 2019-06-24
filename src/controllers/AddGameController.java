@@ -32,13 +32,11 @@ public class AddGameController {
 
     public void submit(ActionEvent actionEvent) {
         try {
-        	if(path.getText() != "")
+        	if(!path.getText().equals(""))
         		DBConnection.inst().insertGame(new Game(name.getText(), path.getText()));
             app.refreshGamesList();
             cancel(null);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } catch (SQLException e) {}
     }
 
     public void browse(ActionEvent actionEvent) {

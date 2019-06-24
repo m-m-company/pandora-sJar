@@ -20,5 +20,8 @@
       <Button layoutX="80.0" layoutY="447.0" mnemonicParsing="false" onAction="#CancelAction" onKeyPressed="#enterCancel" text="Cancel" />
       <Button layoutX="245.0" layoutY="447.0" mnemonicParsing="false" onAction="#ConfirmAction" onKeyPressed="#enterConfirm" text="Confirm" />
       <Label layoutX="48.0" layoutY="366.0" prefHeight="25.0" prefWidth="95.0" text="New password" />
+      <Label fx:id="errorMail" layoutX="201.0" layoutY="160.0" text="Invalid email address" textFill="RED" visible="false" />
+      <Label fx:id="errorPassword2" layoutX="184.0" layoutY="351.0" text="Passwords doesen't match" textFill="RED" visible="false" />
+      <Label fx:id="errorPassword1" layoutX="184.0" layoutY="287.0" text="Passwords doesen't match" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

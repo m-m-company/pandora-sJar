@@ -68,7 +68,6 @@ public class LoginController {
 		        	controller.init(actualUser);
 		            Stage stage = new Stage();
 		            stage.setTitle("Pandor's jar");
-		            stage.setMaximized(true);
 		            stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
 		            Stage th = (Stage) username.getScene().getWindow();
 		            th.close();

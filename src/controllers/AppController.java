@@ -243,11 +243,11 @@ public class AppController {
 		}
 	}
 
-	@FXML
-	void enterAddGame(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER)
-			openAddGame();
-	}
+//	@FXML
+//	void enterAddGame(KeyEvent event) {
+//		if (event.getCode() == KeyCode.ENTER)
+//			openAddGame();
+//	}
 
 	@FXML
 	void enterManageAccount(KeyEvent event) {
@@ -291,6 +291,37 @@ public class AppController {
 		if (event.getCode() == KeyCode.ENTER)
 			removeGame(null);
 	}
+	
+	@FXML
+    void logout(ActionEvent event) {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("ARE YOU SURE?");
+		alert.setContentText("Are you sure logout?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent()) {
+			if (result.get().equals(ButtonType.OK)) {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"Login.fxml"));
+		    	Parent root = null;
+				try {
+					root = loader.load();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		        Stage stage = new Stage();
+		        stage.setTitle("Pandor's jar");
+		        stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
+		        Stage th = (Stage) username.getScene().getWindow();
+		        th.close();
+		        stage.show();
+			}
+		}
+    }
+
+    @FXML
+    void enterLogout(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		logout(null);
+    }
 
 
 }
