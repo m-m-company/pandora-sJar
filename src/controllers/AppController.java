@@ -1,5 +1,15 @@
 package controllers;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,7 +17,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -20,12 +34,6 @@ import model.DBConnection;
 import model.Game;
 import model.Pair;
 import model.User;
-
-import java.io.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Optional;
 
 public class AppController {
 
@@ -184,8 +192,7 @@ public class AppController {
 	@FXML
 	void shortcut(KeyEvent event) {
 		if (event.getCode() == KeyCode.ESCAPE) {
-			Stage th = (Stage) username.getScene().getWindow();
-			th.close();
+			this.logout(null);
 		}
 		if (event.isControlDown() && event.getCode() == KeyCode.N) {
 			openAddGame();
@@ -196,7 +203,13 @@ public class AppController {
 	void play(ActionEvent e) {
 		if (actualGame != null) {
 			String pathGame;
-			String so = System.getProperty("os.name");
+			String so = System.getProperty("os\n" + 
+					"\n" + 
+					"    @FXML\n" + 
+					"    void setGameNull(MouseEvent event) {\n" + 
+					"    	actualGame = null;\n" + 
+					"    	refreshRanks();\n" + 
+					"    }.name");
 			if (so.contains("Windows"))
 				pathGame = actualGame.getPath().substring(6);
 			else
@@ -261,7 +274,6 @@ public class AppController {
 			play(null);
 	}
 
-
 	@FXML
 	void removeGame(ActionEvent event) {
 		if (actualGame != null) {
@@ -284,7 +296,6 @@ public class AppController {
 			}
 		}
 	}
-
 
 	@FXML
 	void enterRemoveGame(KeyEvent event) {
@@ -322,6 +333,5 @@ public class AppController {
     	if(event.getCode() == KeyCode.ENTER)
     		logout(null);
     }
-
 
 }

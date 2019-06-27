@@ -19,6 +19,7 @@ public class Main extends Application {
         AnchorPane root = controllerA.load();
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, primaryStage.getHeight(), primaryStage.getWidth()));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

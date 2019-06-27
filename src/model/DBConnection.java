@@ -168,30 +168,6 @@ public class DBConnection {
 		pstmt.close();
 	}
 	
-//	private boolean hasARecord(Game game) throws SQLException {
-//		String query = "SELECT * FROM ranks WHERE game=?";
-//		PreparedStatement pstmt = con.prepareStatement(query);
-//		pstmt.setString(1, game.getName());
-//		ResultSet rs = pstmt.executeQuery();
-//		return rs.next();
-//	}
-//	
-//	public void changeHighScore(Game game, User user, Integer points) throws SQLException {
-//		if(hasARecord(game)) {
-//			String query = "UPDATE ranks " + 
-//						   "SET idplayer=?, points=? " +
-//						   "WHERE game=?;";
-//			PreparedStatement pstmt = con.prepareStatement(query);
-//			pstmt.setInt(1, user.getId());
-//			pstmt.setInt(2, points);
-//			pstmt.setString(3, game.getName());
-//			pstmt.executeUpdate();
-//			pstmt.close();
-//		}
-//		else
-//			insertPoints(game, user, points);
-//	}
-	
 	public ArrayList<Pair<String, Integer>> getPoints(Game game) throws SQLException {
 		ArrayList<Pair<String, Integer>> pairs = new ArrayList<Pair<String,Integer>>();
 		String query = "SELECT users.username, ranks.points FROM users, ranks WHERE game=? AND id=idplayer;";
@@ -203,5 +179,35 @@ public class DBConnection {
 		}
 		return pairs;
 	}
+	
+	public String findPassword(String email) throws SQLException {
+		String query = "SELECT password " + 
+					   "FROM users " + 
+					   "WHERE mail=?;";
+		PreparedStatement pstmt = con.prepareStatement(query);
+		pstmt.setString(1, email);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()) {
+			return rs.getString(1);
+		}
+		else
+			return null;
+	}
 
+	public boolean emailAlreadyExists(String email) throws SQLException {
+		String query = "SELECT mail " + 
+					   "FROM users " + 
+					   "WHERE mail=?;";
+		PreparedStatement pstmt = con.prepareStatement(query);
+		pstmt.setString(1, email);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next())
+			return true;
+		return false;
+	}
+	
 }
+
+
+
+

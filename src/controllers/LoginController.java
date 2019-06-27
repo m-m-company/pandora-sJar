@@ -2,22 +2,28 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
-import javafx.scene.input.MouseEvent;
-import model.DBConnection;
-import model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.effect.Glow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.DBConnection;
+import model.EmailManager;
+import model.User;
 
 public class LoginController {
 	
@@ -35,8 +41,12 @@ public class LoginController {
 
     @FXML
     private TextField username;
-    private User actualUser;
+    
+    @FXML
+    private Label clickHere;
 
+    private User actualUser;
+    
     @FXML
     public void registration(ActionEvent e) {
     	Parent root;
@@ -87,7 +97,25 @@ public class LoginController {
 
     @FXML
     void forgotPassword(MouseEvent event) {
- 
+    	TextInputDialog dialog = new TextInputDialog();
+    	dialog.setHeaderText("Insert your email");
+    	Optional<String> email = dialog.showAndWait();
+    	String password = null;
+    	if(email.isPresent()) {
+			try {
+				password = DBConnection.inst().findPassword(email.get());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+    	}
+    	if(password == null) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("ERROR");
+    		alert.setContentText("The email doesen't exist");
+    		alert.showAndWait();
+    	}
+    	else
+    		EmailManager.inst().sendPassword(email.get(), password, dialog);
     }
 
     @FXML
@@ -114,6 +142,16 @@ public class LoginController {
     		Stage th = (Stage) username.getScene().getWindow();
         	th.close();
     	}
+    }
+    
+    @FXML
+    void effectOn(MouseEvent event) {
+    	clickHere.setEffect(new Glow(1));
+    }
+
+    @FXML
+    void effectOff(MouseEvent event) {
+    	clickHere.setEffect(null);
     }
 
 }
