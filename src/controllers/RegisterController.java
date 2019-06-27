@@ -3,7 +3,6 @@ package controllers;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,10 +56,6 @@ public class RegisterController {
 		EmailManager.inst().sendRegistrationEmail(code, email.getText(), username.getText(), dialog);
 	}
 
-	public static boolean testEmail(String email) {
-		return Pattern.matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", email);
-	}
-
 	public void sendData(ActionEvent e) {
 		if (!password.getText().equals(confirmPassword.getText())) {
 			errorPassword1.setVisible(true);
@@ -71,7 +66,7 @@ public class RegisterController {
 			errorPassword2.setVisible(false);
 		}
 			
-		boolean testMail = testEmail(email.getText());
+		boolean testMail = EmailManager.inst().testEmail(email.getText());
 		boolean alreadyExist = false;
 		try {
 			alreadyExist = DBConnection.inst().emailAlreadyExists(email.getText());

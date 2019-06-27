@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.DBConnection;
+import model.EmailManager;
 import model.User;
 
 public class AccountController {
@@ -33,12 +34,12 @@ public class AccountController {
 
     @FXML
     private TextField username;
-    
-    @FXML
-    private Label errorPassword2;
 
     @FXML
     private Label errorPassword1;
+    
+    @FXML
+    private Label errorPassword2;
 
     @FXML
     private Label errorMail;
@@ -101,30 +102,54 @@ public class AccountController {
 
     @FXML
     void ConfirmAction(ActionEvent event) {
-    	if(RegisterController.testEmail(email.getText())) {
-    		errorMail.setVisible(false);
-        	if(!newPassword.getText().isEmpty() && oldPassword.getText().equals(user.getPassword())) {
-        		errorPassword1.setVisible(false);
-            	errorPassword2.setVisible(false);
-        		user.setPassword(newPassword.getText());
-            	user.setEmail(email.getText());
-            	user.setUsername(username.getText());
-            	try {
-        			DBConnection.inst().changeDataUser(user);
-        		} catch (SQLException e) {
-        			e.printStackTrace();
-        		}
-            	Stage th = (Stage) username.getScene().getWindow();
-                th.close();
-                app.refreshAccount();
-        	}
-        	else {
-        		errorPassword1.setVisible(true);
-        		errorPassword2.setVisible(true);
-        	}
+    	boolean testMail = EmailManager.inst().testEmail(email.getText());
+    	boolean alreadyExist = false;
+    	try {
+    		if(!email.getText().equals(user.getEmail()))
+    			alreadyExist = DBConnection.inst().emailAlreadyExists(email.getText());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+    	if(!testMail) {
+    		errorMail.setText("email is not valid");
+    		errorMail.setVisible(true);
+    	}
+    	else if(alreadyExist) {
+    		errorMail.setText("email already exists");
+    		errorMail.setVisible(true);
     	}
     	else
-    		errorMail.setVisible(true);
+    		errorMail.setVisible(false);
+    	
+    	if(!oldPassword.getText().equals(user.getPassword()))
+    		errorPassword1.setVisible(true);
+    	else
+    		errorPassword1.setVisible(false);
+    	
+    	if(newPassword.getText().isEmpty())
+    		errorPassword2.setVisible(true);
+    	else
+    		errorPassword2.setVisible(false);
+    	
+    	if(oldPassword.getText().isEmpty() && newPassword.getText().isEmpty()) {
+    		errorPassword1.setVisible(false);
+    		errorPassword2.setVisible(false);
+    	}
+    	
+    	if(!errorMail.isVisible() && !errorPassword1.isVisible() && !errorPassword2.isVisible()) {
+    		if(!newPassword.getText().isEmpty())
+    			user.setPassword(newPassword.getText());
+        	user.setEmail(email.getText());
+        	user.setUsername(username.getText());
+        	try {
+    			DBConnection.inst().changeDataUser(user);
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+        	Stage th = (Stage) username.getScene().getWindow();
+            th.close();
+            app.refreshAccount();
+    	}
     }
     
     @FXML

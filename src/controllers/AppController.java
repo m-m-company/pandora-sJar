@@ -28,7 +28,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import model.DBConnection;
 import model.Game;
@@ -52,7 +51,7 @@ public class AppController {
 	private ImageView propic;
 
 	@FXML
-	private MediaView preview;
+	private ImageView preview;
 
 	@FXML
 	private Button playButton;
@@ -100,6 +99,7 @@ public class AppController {
 			Stage stage = new Stage();
 			stage.setTitle("Add a game");
 			stage.setScene(new Scene(root, 300, 500));
+			stage.setResizable(false);
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -166,6 +166,7 @@ public class AppController {
 			Stage stage = new Stage();
 			stage.setTitle("Account");
 			stage.setScene(new Scene(root, 400, 500));
+			stage.setResizable(false);
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -173,19 +174,12 @@ public class AppController {
 	}
 
 	public void showPreview(Game game) {
-		/*
-		 * La prossima volta che qualcuno mi dice che java è perfettamente portabile giuro che gli sputo in bocca
-		 * System.out.println(game.getPath()); String path =
-		 * game.getPath().substring(6); File f = new File(path); File h = new
-		 * File(f.getParent()+File.separator+"preview.mp4");
-		 *
-		 * Media media = null; try {
-		 * System.out.println(h.toURI().toURL().toExternalForm()); media = new
-		 * Media(h.toURI().toURL().toExternalForm()); } catch (Exception e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } MediaPlayer mediaPlayer =
-		 * new MediaPlayer(media); mediaPlayer.setAutoPlay(true); mediaPlayer.play();
-		 * preview.setMediaPlayer(mediaPlayer);
-		 */
+		//windows should not work
+		String path = game.getPath().substring(5);
+		File f = new File(path); 
+		File h = new File(f.getParent()+File.separator+"preview.png");
+		Image image = new Image("file:" + h.getPath());
+		preview.setImage(image);
 		refreshRanks();
 	}
 
@@ -262,6 +256,7 @@ public class AppController {
 //			openAddGame();
 //	}
 
+	
 	@FXML
 	void enterManageAccount(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER)
@@ -321,6 +316,7 @@ public class AppController {
 		        Stage stage = new Stage();
 		        stage.setTitle("Pandor's jar");
 		        stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
+		        stage.setResizable(false);
 		        Stage th = (Stage) username.getScene().getWindow();
 		        th.close();
 		        stage.show();
@@ -334,4 +330,32 @@ public class AppController {
     		logout(null);
     }
 
+    @FXML
+    void enterOpenAddGame(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		openAddGame();
+    }
+    
+    @FXML
+    void aboutUs(ActionEvent event) {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"AboutUs.fxml"));
+    	Parent root = null;
+    	try {
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	Stage stage = new Stage();
+    	stage.setTitle("m-m company");
+    	stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
+    	stage.setResizable(false);
+    	stage.show();
+    }
+    
+    @FXML
+    void enterAboutUs(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		aboutUs(null);
+    }
+    
 }
