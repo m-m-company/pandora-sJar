@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -44,8 +45,22 @@ public class LoginController {
     
     @FXML
     private Label clickHere;
+    
+    @FXML
+    private CheckBox showPassword;
+
+    @FXML
+    private TextField passwordText;
 
     private User actualUser;
+    
+    public void initialize() {
+    	passwordText.managedProperty().bind(showPassword.selectedProperty());
+        passwordText.visibleProperty().bind(showPassword.selectedProperty());
+        password.managedProperty().bind(showPassword.selectedProperty().not());
+        password.visibleProperty().bind(showPassword.selectedProperty().not());
+        passwordText.textProperty().bindBidirectional(password.textProperty());
+    }
     
     @FXML
     public void registration(ActionEvent e) {
@@ -153,5 +168,15 @@ public class LoginController {
     void effectOff(MouseEvent event) {
     	clickHere.setEffect(null);
     }
-
+    
+    @FXML
+    void enterShowPassword(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER) {
+    		if(showPassword.isSelected())
+    			showPassword.setSelected(false);
+    		else
+    			showPassword.setSelected(true);
+    	}
+    }
+    
 }

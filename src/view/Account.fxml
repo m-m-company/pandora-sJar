@@ -7,24 +7,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane onKeyPressed="#exit" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AccountController">
+<AnchorPane onKeyPressed="#exit" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AccountController">
    <children>
       <ImageView fx:id="imageView" fitHeight="60.0" fitWidth="60.0" layoutX="163.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="142.0" layoutY="115.0" mnemonicParsing="false" onAction="#changeImage" onKeyPressed="#enterSelectImage" text="Select image" />
       <TextField fx:id="email" layoutX="185.0" layoutY="175.0" onKeyPressed="#enterFromEmail" />
       <TextField fx:id="username" layoutX="185.0" layoutY="238.0" onKeyPressed="#enterFromUsername" />
       <PasswordField fx:id="oldPassword" layoutX="185.0" layoutY="302.0" onKeyPressed="#enterFromOld" />
-      <PasswordField fx:id="newPassword" layoutX="185.0" layoutY="366.0" onKeyPressed="#enterFromNew" />
+      <TextField fx:id="oldPasswordText" layoutX="185.0" layoutY="302.0" />
+      <CheckBox fx:id="showPassword1" layoutX="208.0" layoutY="327.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword1" text="Show password" />
+      <PasswordField fx:id="newPassword1" layoutX="186.0" layoutY="372.0" onKeyPressed="#enterFromNew" />
+      <TextField fx:id="newPasswordText" layoutX="186.0" layoutY="372.0" />
+      <CheckBox fx:id="showPassword2" layoutX="209.0" layoutY="397.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword2" text="Show password" />
+      <PasswordField fx:id="newPassword2" layoutX="186.0" layoutY="443.0" />
+      <TextField fx:id="confirmPasswordText" layoutX="186.0" layoutY="443.0" />
+      <CheckBox fx:id="showPassword3" layoutX="209.0" layoutY="468.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword3" text="Show password" />
       <Label layoutX="69.0" layoutY="175.0" prefHeight="25.0" prefWidth="36.0" text="email" />
       <Label layoutX="60.0" layoutY="238.0" prefHeight="25.0" prefWidth="67.0" text="Username" />
-      <Label layoutX="49.0" layoutY="302.0" prefHeight="25.0" prefWidth="93.0" text="Old password" />
-      <Button layoutX="80.0" layoutY="447.0" mnemonicParsing="false" onAction="#CancelAction" onKeyPressed="#enterCancel" text="Cancel" />
-      <Button layoutX="245.0" layoutY="447.0" mnemonicParsing="false" onAction="#ConfirmAction" onKeyPressed="#enterConfirm" text="Confirm" />
-      <Label layoutX="48.0" layoutY="366.0" prefHeight="25.0" prefWidth="95.0" text="New password" />
+      <Label layoutX="47.0" layoutY="302.0" prefHeight="25.0" prefWidth="93.0" text="Old password" />
+      <Button layoutX="80.0" layoutY="520.0" mnemonicParsing="false" onAction="#CancelAction" onKeyPressed="#enterCancel" text="Cancel" />
+      <Button layoutX="236.0" layoutY="520.0" mnemonicParsing="false" onAction="#ConfirmAction" onKeyPressed="#enterConfirm" text="Confirm" />
+      <Label layoutX="49.0" layoutY="372.0" prefHeight="25.0" prefWidth="95.0" text="New password" />
+      <Label layoutX="38.0" layoutY="448.0" text="Confirm password" />
       <Label fx:id="errorMail" layoutX="201.0" layoutY="160.0" text="Invalid email address" textFill="RED" visible="false" />
       <Label fx:id="errorPassword1" layoutX="194.0" layoutY="287.0" text="password is not correct" textFill="RED" visible="false" />
-      <Label fx:id="errorPassword2" layoutX="202.0" layoutY="351.0" text="password is not valid" textFill="RED" visible="false" />
-      <Label layoutX="364.0" layoutY="305.0" text="?" textFill="BLUE" underline="true">
+      <Label fx:id="errorPassword2" layoutX="202.0" layoutY="357.0" text="password is not valid" textFill="RED" visible="false" />
+      <Label fx:id="errorPassword3" layoutX="185.0" layoutY="428.0" text="passwords doesen't match" textFill="RED" visible="false" />
+      <Label layoutX="363.0" layoutY="305.0" text="?" textFill="BLUE" underline="true">
          <font>
             <Font size="15.0" />
          </font>

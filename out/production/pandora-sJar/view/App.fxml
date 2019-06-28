@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -45,7 +47,7 @@
    <right>
       <AnchorPane prefHeight="691.0" prefWidth="257.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane layoutX="14.0" layoutY="378.0" mouseTransparent="true" prefHeight="253.0" prefWidth="218.0">
+            <ScrollPane fx:id="scoreboard" layoutX="14.0" layoutY="378.0" mouseTransparent="true" prefHeight="253.0" prefWidth="218.0" visible="false">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -67,8 +69,20 @@
                   </AnchorPane>
                </content>
             </ScrollPane>
+            <Button fx:id="deselectButton" layoutX="230.0" layoutY="2.0" mnemonicParsing="false" onAction="#deselectGame" onKeyPressed="#enterDeselectGame" prefHeight="20.0" prefWidth="20.0" text="X" visible="false">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
             <ImageView fx:id="preview" fitHeight="150.0" fitWidth="200.0" layoutX="29.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="playButton" contentDisplay="BOTTOM" layoutX="14.0" layoutY="242.0" mnemonicParsing="false" onAction="#play" onKeyPressed="#enterPlay" prefHeight="39.0" prefWidth="105.0" text="Play!" textAlignment="CENTER" underline="true">
+            <Button fx:id="playButton" contentDisplay="BOTTOM" layoutX="14.0" layoutY="242.0" mnemonicParsing="false" onAction="#play" onKeyPressed="#enterPlay" prefHeight="39.0" prefWidth="105.0" text="Play!" textAlignment="CENTER" underline="true" visible="false">
                <effect>
                   <DropShadow />
                </effect>
@@ -76,12 +90,12 @@
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="58.0" layoutY="355.0" text="HIGH SCORES">
+            <Label fx:id="highScore" layoutX="58.0" layoutY="355.0" text="HIGH SCORES" visible="false">
                <font>
                   <Font name="PMingLiU-ExtB" size="21.0" />
                </font>
             </Label>
-            <Button layoutX="160.0" layoutY="242.0" mnemonicParsing="false" onAction="#removeGame" onKeyPressed="#enterRemoveGame" prefHeight="39.0" prefWidth="72.0" text="Remove" />
+            <Button fx:id="removeButton" layoutX="160.0" layoutY="242.0" mnemonicParsing="false" onAction="#removeGame" onKeyPressed="#enterRemoveGame" prefHeight="39.0" prefWidth="72.0" text="Remove" visible="false" />
          </children>
       </AnchorPane>
    </right>

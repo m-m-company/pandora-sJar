@@ -38,14 +38,21 @@ public class AppController {
 
 	@FXML
 	private GridPane gridPane;
+	
 	@FXML
 	private FlowPane gameList;
 
 	@FXML
 	private ScrollPane scrollPane;
+	
+	@FXML
+	private ScrollPane scoreboard;
 
 	@FXML
 	private Label username;
+	
+	@FXML
+	private Label highScore;
 
 	@FXML
 	private ImageView propic;
@@ -55,8 +62,15 @@ public class AppController {
 
 	@FXML
 	private Button playButton;
+	
+	@FXML
+	private Button deselectButton;
+	
+	@FXML
+	private Button removeButton;
 
 	private User actualUser;
+	
 	private Game actualGame;
 
 	@FXML
@@ -122,27 +136,29 @@ public class AppController {
 
 	public void refreshRanks() {
 		gridPane.getChildren().clear();
-		try {
-			actualGame.setRanks(DBConnection.inst().getPoints(actualGame));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		actualGame.getRanks().sort(new Comparator<Pair<String, Integer>>() {
-			@Override
-			public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
-				return Integer.compare(o2.getSecond(), o1.getSecond());
-			}
-		});
-		for (int i = 0; i < 5; i++) {
+		if(actualGame != null) {
 			try {
-				Label userName = new Label(i + 1 + ". " + actualGame.getRanks().get(i).getFirst());
-				Label points = new Label(actualGame.getRanks().get(i).getSecond().toString());
-				gridPane.addRow(i, userName, points);
-			} catch (IndexOutOfBoundsException a) {
-				i = 5;
+				actualGame.setRanks(DBConnection.inst().getPoints(actualGame));
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
+			actualGame.getRanks().sort(new Comparator<Pair<String, Integer>>() {
+				@Override
+				public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
+					return Integer.compare(o2.getSecond(), o1.getSecond());
+				}
+			});
+			for (int i = 0; i < 5; i++) {
+				try {
+					Label userName = new Label(i + 1 + ". " + actualGame.getRanks().get(i).getFirst());
+					Label points = new Label(actualGame.getRanks().get(i).getSecond().toString());
+					gridPane.addRow(i, userName, points);
+				} catch (IndexOutOfBoundsException a) {
+					i = 5;
+				}
+			}
+			gridPane.setAlignment(Pos.CENTER_RIGHT);
 		}
-		gridPane.setAlignment(Pos.CENTER_RIGHT); // cambia se vuoi
 	}
 
 	public void init(User actualUser) {
@@ -165,7 +181,7 @@ public class AppController {
 			controller.init(actualUser, this);
 			Stage stage = new Stage();
 			stage.setTitle("Account");
-			stage.setScene(new Scene(root, 400, 500));
+			stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
 			stage.setResizable(false);
 			stage.show();
 		} catch (IOException e) {
@@ -175,6 +191,11 @@ public class AppController {
 
 	public void showPreview(Game game) {
 		//windows should not work
+		playButton.setVisible(true);
+		removeButton.setVisible(true);
+		highScore.setVisible(true);
+		scoreboard.setVisible(true);
+		deselectButton.setVisible(true);
 		String path = game.getPath().substring(5);
 		File f = new File(path); 
 		File h = new File(f.getParent()+File.separator+"preview.png");
@@ -196,18 +217,19 @@ public class AppController {
 	@FXML
 	void play(ActionEvent e) {
 		if (actualGame != null) {
-			String pathGame;
-			String so = System.getProperty("os\n" + 
-					"\n" + 
-					"    @FXML\n" + 
-					"    void setGameNull(MouseEvent event) {\n" + 
-					"    	actualGame = null;\n" + 
-					"    	refreshRanks();\n" + 
-					"    }.name");
-			if (so.contains("Windows"))
-				pathGame = actualGame.getPath().substring(6);
-			else
-				pathGame = actualGame.getPath().substring(5);
+			String pathGame = actualGame.getPath().substring(5);
+//          Windows should not work
+//			String so = System.getProperty("os\n" + 
+//					"\n" + 
+//					"    @FXML\n" + 
+//					"    void setGameNull(MouseEvent event) {\n" + 
+//					"    	actualGame = null;\n" + 
+//					"    	refreshRanks();\n" + 
+//					"    }.name");
+//			if (so.contains("Windows"))
+//				pathGame = actualGame.getPath().substring(6);
+//			else
+//				pathGame = 
 			ProcessBuilder pb = null;
 			try {
 				String highUser;
@@ -249,13 +271,6 @@ public class AppController {
 			}
 		}
 	}
-
-//	@FXML
-//	void enterAddGame(KeyEvent event) {
-//		if (event.getCode() == KeyCode.ENTER)
-//			openAddGame();
-//	}
-
 	
 	@FXML
 	void enterManageAccount(KeyEvent event) {
@@ -274,16 +289,15 @@ public class AppController {
 		if (actualGame != null) {
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("ARE YOU SURE?");
-			alert.setContentText("Are you sure to delete this game? You will LOSE EVERY RANKS and this action is " +
+			alert.setContentText("Are you sure to delete this game? This action is " +
 					"IRREVERSIBLE");
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.isPresent()) {
 				if (result.get().equals(ButtonType.OK)) {
 					try {
 						DBConnection.inst().removeGame(actualGame);
-						actualGame = null;
-						this.refreshGamesList();
-						gridPane.getChildren().clear();
+						deselectGame(null);
+						refreshGamesList();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -356,6 +370,24 @@ public class AppController {
     void enterAboutUs(KeyEvent event) {
     	if(event.getCode() == KeyCode.ENTER)
     		aboutUs(null);
+    }
+    
+    @FXML
+    void deselectGame(ActionEvent event) {
+    	actualGame = null;
+    	deselectButton.setVisible(false);
+    	playButton.setVisible(false);
+		removeButton.setVisible(false);
+		highScore.setVisible(false);
+		scoreboard.setVisible(false);
+    	preview.setImage(null);
+    	refreshRanks();
+    }
+    
+    @FXML
+    void enterDeselectGame(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		deselectGame(null);
     }
     
 }

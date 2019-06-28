@@ -17,17 +17,19 @@
          </opaqueInsets>
       </TextField>
       <PasswordField fx:id="password" layoutX="65.0" layoutY="170.0" onKeyPressed="#enterFromField" />
-      <Button fx:id="login" layoutX="111.0" layoutY="209.0" mnemonicParsing="false" onAction="#loginAction" onKeyPressed="#enterLogin" prefHeight="25.0" prefWidth="81.0" text="Login" />
-      <Button fx:id="register" layoutX="95.0" layoutY="307.0" mnemonicParsing="false" onAction="#registration" onKeyPressed="#enterRegister" prefHeight="25.0" prefWidth="110.0" text="Register">
+      <TextField fx:id="passwordText" layoutX="66.0" layoutY="170.0" />
+      <CheckBox fx:id="showPassword" layoutX="88.0" layoutY="200.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword" text="Show password" />
+      <Button fx:id="login" layoutX="110.0" layoutY="240.0" mnemonicParsing="false" onAction="#loginAction" onKeyPressed="#enterLogin" prefHeight="25.0" prefWidth="81.0" text="Login" />
+      <Button fx:id="register" layoutX="96.0" layoutY="343.0" mnemonicParsing="false" onAction="#registration" onKeyPressed="#enterRegister" prefHeight="25.0" prefWidth="110.0" text="Register">
          <opaqueInsets>
             <Insets bottom="150.0" top="150.0" />
          </opaqueInsets>
       </Button>
-      <Label layoutX="62.0" layoutY="276.0" prefHeight="25.0" prefWidth="179.0" text="Don't have an account yet?" />
+      <Label layoutX="61.0" layoutY="304.0" prefHeight="25.0" prefWidth="179.0" text="Don't have an account yet?" />
       <Label layoutX="117.0" layoutY="77.0" text="Username" />
       <Label layoutX="120.0" layoutY="143.0" text="Password" />
-      <Label layoutX="55.0" layoutY="247.0" prefHeight="21.0" prefWidth="155.0" text="Forgot password? Click " />
-      <Label fx:id="clickHere" layoutX="210.0" layoutY="247.0" onMouseEntered="#effectOn" onMouseExited="#effectOff" onMousePressed="#forgotPassword" prefHeight="21.0" prefWidth="36.0" text="HERE" textFill="RED" />
+      <Label layoutX="55.0" layoutY="274.0" prefHeight="21.0" prefWidth="155.0" text="Forgot password? Click " />
+      <Label fx:id="clickHere" layoutX="210.0" layoutY="274.0" onMouseEntered="#effectOn" onMouseExited="#effectOff" onMousePressed="#forgotPassword" prefHeight="21.0" prefWidth="36.0" text="HERE" textFill="RED" />
       <Label fx:id="errorData" layoutX="14.0" layoutY="25.0" prefHeight="34.0" prefWidth="300.0" text="Username and/or password are not correct!" textFill="RED" underline="true" visible="false" />
    </children>
 </AnchorPane>
