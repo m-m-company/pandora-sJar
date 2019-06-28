@@ -1,22 +1,9 @@
 package controllers;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import com.sun.mail.smtp.SMTPTransport;
-
-import database.DBConnection;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,6 +15,8 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import model.DBConnection;
+import model.EmailManager;
 
 public class RegisterController {
 	
@@ -64,69 +53,52 @@ public class RegisterController {
 
 	private void sendEmail() {
 		code = generateCode();
-		System.out.println(code);
-		// I can't use Thread 'cause of JavaFX
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				Properties props = System.getProperties();
-				props.put("mail.smtps.host", "smtp.gmail.com");
-				props.put("mail.smtps.auth", "true");
-				Session session = Session.getInstance(props, null);
-				Message msg = new MimeMessage(session);
-				try {
-					msg.setFrom(new InternetAddress("noreplypandorasjar@gmail.com"));
-					msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getText(), false));
-					msg.setSubject("WELCOME!");
-					msg.setText(
-							"Welcome to Pandora's Jar dear " + username.getText() + "!" + "\n Your code is: " + code);
-					msg.setHeader("X-Mailer", "");
-					msg.setSentDate(new Date());
-					SMTPTransport t = (SMTPTransport) session.getTransport("smtps");
-					t.connect("smtp.gmail.com", "noreplypandorasjar@gmail.com", "otxpncvzndrtbaie");
-					t.sendMessage(msg, msg.getAllRecipients());
-					System.out.println("Response: " + t.getLastServerResponse());
-					t.close();
-				} catch (MessagingException ex) {
-					dialog.setHeaderText(
-							"There are problems with your internet connection, check it, press cancel and try it again");
-				}
-			}
-		});
-	}
-
-	private boolean testEmail(String email) {
-		return Pattern.matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\"
-				+ ".[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", email);
+		EmailManager.inst().sendRegistrationEmail(code, email.getText(), username.getText(), dialog);
 	}
 
 	public void sendData(ActionEvent e) {
-		if (password.getText().equals(confirmPassword.getText())) {
-			errorPassword1.setVisible(false);
-			errorPassword2.setVisible(false);
-			if (testEmail(email.getText()) && !username.getText().equals("")) {
-				errorEmail.setVisible(false);
-				sendEmail();
-				if (showConfirmDialog()) {
-					Stage th = (Stage) username.getScene().getWindow();
-					showOkDialog();
-					th.close();
-					try {
-						DBConnection.inst().insertUser(username.getText(), password.getText(), email.getText());
-						DBConnection.inst().closeConnection();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-			else
-				errorEmail.setVisible(true);
-		}
-		else {
+		if (!password.getText().equals(confirmPassword.getText())) {
 			errorPassword1.setVisible(true);
 			errorPassword2.setVisible(true);
 		}
+		else {
+			errorPassword1.setVisible(false);
+			errorPassword2.setVisible(false);
+		}
 			
+		boolean testMail = EmailManager.inst().testEmail(email.getText());
+		boolean alreadyExist = false;
+		try {
+			alreadyExist = DBConnection.inst().emailAlreadyExists(email.getText());
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		if(!testMail) {
+			errorEmail.setText("email is not valid");
+			errorEmail.setVisible(true);
+		}
+		else if(alreadyExist) {
+			errorEmail.setText("email already exists");
+			errorEmail.setVisible(true);
+		}
+		else
+			errorEmail.setVisible(false);
+		
+		if (!username.getText().equals("") && !errorPassword1.isVisible()
+				&& !errorPassword2.isVisible() && !errorEmail.isVisible()) {
+			sendEmail();
+			if (showConfirmDialog()) {
+				Stage th = (Stage) username.getScene().getWindow();
+				showOkDialog();
+				th.close();
+				try {
+					DBConnection.inst().insertUser(username.getText(), password.getText(), email.getText());
+					DBConnection.inst().closeConnection();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}	
 	}
 
 	private boolean showConfirmDialog() {
@@ -163,6 +135,22 @@ public class RegisterController {
 	void confirmAction(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER)
 			this.sendData(null);
+		if(event.getCode() == KeyCode.ESCAPE) {
+			Stage th = (Stage) username.getScene().getWindow();
+			th.close();
+		}
 	}
+	
+	@FXML
+    void enterConfirm(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			sendData(null);
+    }
+	
+	@FXML
+    void enterCancel(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			refuse(null);
+    }
 
 }
