@@ -26,6 +26,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -104,11 +110,16 @@ public class AppController {
 
 	@FXML
 	public void openAddGame() {
-		Parent root;
+		AnchorPane root;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath + "AddGame.fxml"));
 		try {
-			root = loader.load();
+			root = (AnchorPane)loader.load();
 			AddGameController gameController = loader.getController();
+			Image back = new Image("file:"+Main.resourcesPath+"/background.png");
+	        BackgroundImage backgroundImage = new BackgroundImage(back, BackgroundRepeat.REPEAT, 
+	        		BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	        root.setBackground(new Background(backgroundImage));
+	        
 			gameController.setApp(this);
 			Stage stage = new Stage();
 			stage.setTitle("Add a game");
@@ -173,12 +184,16 @@ public class AppController {
 
 	@FXML
 	void manageAccount(ActionEvent event) {
-		Parent root;
+		AnchorPane root;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath + "Account.fxml"));
 		try {
-			root = loader.load();
+			root = (AnchorPane) loader.load();
 			AccountController controller = loader.getController();
 			controller.init(actualUser, this);
+			Image back = new Image("file:"+Main.resourcesPath+"/background.png");
+	        BackgroundImage backgroundImage = new BackgroundImage(back, BackgroundRepeat.REPEAT, 
+	        		BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	        root.setBackground(new Background(backgroundImage));
 			Stage stage = new Stage();
 			stage.setTitle("Account");
 			stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
@@ -321,12 +336,17 @@ public class AppController {
 		if (result.isPresent()) {
 			if (result.get().equals(ButtonType.OK)) {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"Login.fxml"));
-		    	Parent root = null;
+		    	AnchorPane root = null;
 				try {
 					root = loader.load();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				Image back = new Image("file:"+Main.resourcesPath+"/background.png");
+		        BackgroundImage backgroundImage = new BackgroundImage(back, BackgroundRepeat.REPEAT, 
+		        		BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        root.setBackground(new Background(backgroundImage));
+		        
 		        Stage stage = new Stage();
 		        stage.setTitle("Pandor's jar");
 		        stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
@@ -353,12 +373,17 @@ public class AppController {
     @FXML
     void aboutUs(ActionEvent event) {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath+"AboutUs.fxml"));
-    	Parent root = null;
+    	AnchorPane root = null;
     	try {
-			root = loader.load();
+			root = (AnchorPane) loader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	Image back = new Image("file:"+Main.resourcesPath+"/background.png");
+        BackgroundImage backgroundImage = new BackgroundImage(back, BackgroundRepeat.REPEAT, 
+        		BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        root.setBackground(new Background(backgroundImage));
+        
     	Stage stage = new Stage();
     	stage.setTitle("m-m company");
     	stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));

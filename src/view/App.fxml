@@ -1,42 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.media.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane onKeyPressed="#shortcut" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AppController">
+<BorderPane onKeyPressed="#shortcut" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AppController">
    <left>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="propic" fitHeight="119.0" fitWidth="109.0" focusTraversable="true" layoutX="14.0" layoutY="14.0" pickOnBounds="true" />
-            <Label fx:id="username" layoutX="133.0" layoutY="31.0" prefHeight="20.0" prefWidth="67.0" text="Label" />
+            <Label fx:id="username" layoutX="133.0" layoutY="31.0" prefHeight="20.0" prefWidth="67.0" text="Label" textFill="WHITE" />
             <Button layoutX="37.0" layoutY="149.0" mnemonicParsing="false" onAction="#manageAccount" onKeyPressed="#enterManageAccount" text="Manage account" />
             <Button layoutX="69.0" layoutY="211.0" mnemonicParsing="false" onAction="#logout" onKeyPressed="#enterLogout" text="Logout" />
             <Button layoutX="58.0" layoutY="275.0" mnemonicParsing="false" onAction="#openAddGame" onKeyPressed="#enterOpenAddGame" text="Add game" />
@@ -69,7 +56,7 @@
                   </AnchorPane>
                </content>
             </ScrollPane>
-            <Button fx:id="deselectButton" layoutX="230.0" layoutY="2.0" mnemonicParsing="false" onAction="#deselectGame" onKeyPressed="#enterDeselectGame" prefHeight="20.0" prefWidth="20.0" text="X" visible="false">
+            <Button id="buttonExit" fx:id="deselectButton" layoutX="230.0" layoutY="2.0" mnemonicParsing="false" onAction="#deselectGame" onKeyPressed="#enterDeselectGame" prefHeight="20.0" prefWidth="20.0" text="X" visible="false">
                <effect>
                   <Lighting>
                      <bumpInput>
@@ -90,7 +77,7 @@
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Label fx:id="highScore" layoutX="58.0" layoutY="355.0" text="HIGH SCORES" visible="false">
+            <Label fx:id="highScore" layoutX="58.0" layoutY="355.0" text="HIGH SCORES" textFill="WHITE" visible="false">
                <font>
                   <Font name="PMingLiU-ExtB" size="21.0" />
                </font>
@@ -102,7 +89,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="scrollPane" cache="true" prefHeight="551.0" prefWidth="467.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane fx:id="scrollPane" cache="true" prefHeight="551.0" prefWidth="467.0" style="-fx-background: #FFFFFF; -fx-border-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <FlowPane fx:id="gameList" />
                </content>
@@ -110,4 +97,7 @@
          </children>
       </AnchorPane>
    </center>
+   <stylesheets>
+   	<URL value="@style.css" />
+   </stylesheets>
 </BorderPane>
