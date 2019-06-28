@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -7,7 +8,12 @@
 
 <AnchorPane prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AboutUsController">
    <children>
-      <Label fx:id="text" layoutX="114.0" layoutY="34.0" text="Label" />
       <Button layoutX="129.0" layoutY="249.0" mnemonicParsing="false" onAction="#ok" onKeyPressed="#enterOk" text="OK!" />
+      <TextArea fx:id="text" layoutX="50.0" layoutY="20.0" prefHeight="177.0" prefWidth="300.0" text="This project has been made for the event oriented programming exam of the university of calabria. The following link is our github organization profile. Enjoy!" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </TextArea>
+      <Hyperlink fx:id="link" layoutX="35.0" layoutY="194.0" onAction="#clickLink" text="https://github.com/m-m-company" />
    </children>
 </AnchorPane>

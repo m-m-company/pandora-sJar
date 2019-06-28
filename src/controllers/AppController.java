@@ -382,11 +382,6 @@ public class AppController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	Image back = new Image("file:"+Main.resourcesPath+"/background.png");
-        BackgroundImage backgroundImage = new BackgroundImage(back, BackgroundRepeat.REPEAT, 
-        		BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        root.setBackground(new Background(backgroundImage));
-        
     	Stage stage = new Stage();
     	stage.setTitle("m-m company");
     	stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
