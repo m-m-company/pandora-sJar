@@ -2,8 +2,8 @@ package controllers;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -236,7 +237,7 @@ public class AppController {
 	void play(ActionEvent e) {
 		if (actualGame != null) {
 			String pathGame = actualGame.getPath().substring(5);
-//          Windows should not work
+//         FIXME: Windows should not work
 //			String so = System.getProperty("os\n" + 
 //					"\n" + 
 //					"    @FXML\n" + 
@@ -269,20 +270,21 @@ public class AppController {
 					pb.environment().put("pandoras_HighScore", "0");
 				}
 				pb.environment().put("pandoras_ActualUser", actualUser.getUsername());
-				String pathPoints = new File(pathGame).getParent();
-				File pointsFile = new File(pathPoints + File.separator + "points.txt");
-				pb.redirectOutput(pointsFile);
 				Process p = pb.start();
-				p.waitFor();
-				BufferedReader bf = new BufferedReader(new FileReader(pointsFile));
+				BufferedReader bf = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				int exitCode = p.waitFor();
+				if(exitCode != 255 ) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Something went wrong");
+					alert.setContentText("Something in the execution of the game went wrong,\n"
+							+ "please reconsider your installation of it");
+					alert.showAndWait();
+				}
 				while (bf.ready()) {
 					Integer points = Integer.valueOf(bf.readLine());
 					DBConnection.inst().insertPoints(actualGame, actualUser, points);
 				}
 				refreshRanks();
-				PrintWriter pw = new PrintWriter(pointsFile);
-				pw.write("");
-				pw.close();
 				bf.close();
 			} catch (SQLException | IOException | InterruptedException e1) {
 				e1.printStackTrace();
