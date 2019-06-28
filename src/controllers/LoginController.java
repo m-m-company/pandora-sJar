@@ -82,7 +82,8 @@ public class LoginController {
 	        root.setBackground(new Background(backgroundImage));
 			Stage stage = new Stage();
 			stage.setTitle("Registration");
-			stage.setScene(new Scene(root, 450, 450));
+			stage.setResizable(false);
+			stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
 			stage.show();
 		} catch (IOException ed) {
 			ed.printStackTrace();
@@ -107,7 +108,7 @@ public class LoginController {
 					stage.setTitle("Pandor's jar");
 					Image back = new Image("file:" + Main.resourcesPath + "/backgroundApp.png");
 					BackgroundImage backgroundImage = new BackgroundImage(back, BackgroundRepeat.REPEAT,
-							BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+							BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 					root.setBackground(new Background(backgroundImage));
 
 					stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));

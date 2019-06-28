@@ -34,6 +34,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.DBConnection;
 import model.Game;
@@ -162,7 +163,9 @@ public class AppController {
 			for (int i = 0; i < 5; i++) {
 				try {
 					Label userName = new Label(i + 1 + ". " + actualGame.getRanks().get(i).getFirst());
+					userName.setTextFill(Color.web("#ffffff"));
 					Label points = new Label(actualGame.getRanks().get(i).getSecond().toString());
+					points.setTextFill(Color.web("#ffffff"));
 					gridPane.addRow(i, userName, points);
 				} catch (IndexOutOfBoundsException a) {
 					i = 5;
@@ -413,6 +416,28 @@ public class AppController {
     void enterDeselectGame(KeyEvent event) {
     	if(event.getCode() == KeyCode.ENTER)
     		deselectGame(null);
+    }
+    
+    @FXML
+    void help(ActionEvent event) {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource(Main.viewPath + "Tutorial.fxml"));
+    	AnchorPane pane = null;
+    	try {
+			pane = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	Stage s = new Stage();
+    	s.setTitle("Tutorial");
+    	s.setScene(new Scene(pane, s.getWidth(), s.getHeight()));
+    	s.setResizable(false);
+    	s.show();
+    }
+    
+    @FXML
+    void enterHelp(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ENTER)
+    		help(null);
     }
     
 }

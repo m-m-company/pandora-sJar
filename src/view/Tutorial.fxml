@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controllers.TutorialController">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="leftButton" layoutX="32.0" layoutY="638.0" mnemonicParsing="false" onAction="#leftButtonAction" onKeyPressed="#enterLeftButton" prefHeight="60.0" prefWidth="90.0" text="BACK" visible="false" />
+      <Button fx:id="rightButton" layoutX="1165.0" layoutY="638.0" mnemonicParsing="false" onAction="#rightButtonAction" onKeyPressed="#enterRightButton" prefHeight="60.0" prefWidth="90.0" text="NEXT" />
+   </children>
+</AnchorPane>
