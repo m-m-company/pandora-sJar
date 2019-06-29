@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane onKeyPressed="#exit" prefHeight="397.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddGameController">
+<AnchorPane onKeyPressed="#exit" prefHeight="397.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddGameController">
    <children>
       <Label layoutX="21.0" layoutY="67.0" text="Name" textFill="WHITE" />
       <TextField fx:id="name" layoutX="65.0" layoutY="62.0" onKeyPressed="#enterFromName" />

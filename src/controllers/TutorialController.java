@@ -7,11 +7,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 public class TutorialController {
 	
-	private final static int IMAGES_NUMBER = 6;
-	public static int index = 0;
+	private final static int IMAGES_NUMBER = 7;
+	private int index;
 
     @FXML
     private Button leftButton;
@@ -26,6 +27,7 @@ public class TutorialController {
     
     @FXML
     public void initialize() {
+    	index = 0;
     	for(int i = 0; i < IMAGES_NUMBER; ++i)
     		images[i] = new Image("file:" + Main.resourcesPath + "/tutorial/" + Integer.toString(i) + ".png");
     	imageView.setImage(images[index]);
@@ -48,8 +50,13 @@ public class TutorialController {
 
     @FXML
     void rightButtonAction(ActionEvent event) {
+    	if(rightButton.getText().equals("EXIT")) {
+    		Stage s = (Stage)rightButton.getScene().getWindow();
+    		s.close();
+    		return;
+    	}
     	if(index + 1 == IMAGES_NUMBER - 1)
-    		rightButton.setVisible(false);
+    		rightButton.setText("EXIT");
     	++index;
     	leftButton.setVisible(true);
     	imageView.setImage(images[index]);
