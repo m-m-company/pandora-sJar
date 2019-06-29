@@ -44,5 +44,13 @@ public class AboutUsController {
 			}
     	}
     }
+    
+    @FXML
+    public void exit(KeyEvent event) {
+    	if(event.getCode() == KeyCode.ESCAPE) {
+    		Stage s = (Stage)text.getScene().getWindow();
+    		s.close();
+    	}
+    }
 
 }

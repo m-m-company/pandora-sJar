@@ -98,30 +98,6 @@ public class AccountController {
         newPassword2.visibleProperty().bind(showPassword3.selectedProperty().not());
         confirmPasswordText.textProperty().bindBidirectional(newPassword2.textProperty());
     }
-    
-    @FXML
-    void enterFromEmail(KeyEvent event) {
-    	if(event.getCode() == KeyCode.ENTER)
-    		ConfirmAction(null);
-    }
-
-    @FXML
-    void enterFromUsername(KeyEvent event) {
-    	if(event.getCode() == KeyCode.ENTER)
-    		ConfirmAction(null);
-    }
-
-    @FXML
-    void enterFromOld(KeyEvent event) {
-    	if(event.getCode() == KeyCode.ENTER)
-    		ConfirmAction(null);
-    }
-
-    @FXML
-    void enterFromNew(KeyEvent event) {
-    	if(event.getCode() == KeyCode.ENTER)
-    		ConfirmAction(null);
-    }
 
     @FXML
     void changeImage(ActionEvent event) {

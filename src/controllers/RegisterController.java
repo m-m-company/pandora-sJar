@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -22,22 +23,58 @@ public class RegisterController {
 	
 	@FXML
     private Label errorEmail;
+	
 	@FXML
     private Label errorPassword1;
+	
     @FXML
     private Label errorPassword2;
+    
+    @FXML
+    private Label errorUsername;
+    
 	@FXML
 	private TextField username;
+	
 	@FXML
 	private PasswordField password;
+	
 	@FXML
 	private PasswordField confirmPassword;
+	
+	@FXML
+	private TextField textPassword;
+	
+	@FXML
+	private TextField textConfirmPassword;
+	
+	@FXML
+	private CheckBox showPassword1;
+	
+	@FXML
+	private CheckBox showPassword2;
+	
 	@FXML
 	private TextField email;
 
 	private TextInputDialog dialog;
 	private String code;
 
+	@FXML
+	public void initialize() {
+		textPassword.managedProperty().bind(showPassword1.selectedProperty());
+		textPassword.visibleProperty().bind(showPassword1.selectedProperty());
+		password.managedProperty().bind(showPassword1.selectedProperty().not());
+		password.visibleProperty().bind(showPassword1.selectedProperty().not());
+		textPassword.textProperty().bindBidirectional(password.textProperty());
+		
+		textConfirmPassword.managedProperty().bind(showPassword2.selectedProperty());
+		textConfirmPassword.visibleProperty().bind(showPassword2.selectedProperty());
+		confirmPassword.managedProperty().bind(showPassword2.selectedProperty().not());
+		confirmPassword.visibleProperty().bind(showPassword2.selectedProperty().not());
+		textConfirmPassword.textProperty().bindBidirectional(confirmPassword.textProperty());
+	}
+	
 	private String generateCode() {
 		int leftLimit = 97; // letter 'a'
 		int rightLimit = 122; // letter 'z'
@@ -57,7 +94,12 @@ public class RegisterController {
 	}
 
 	public void sendData(ActionEvent e) {
-		if (!password.getText().equals(confirmPassword.getText())) {
+		if(password.getText().isEmpty()) {
+			errorPassword1.setText("password is not valid");
+			errorPassword1.setVisible(true);
+		}
+		else if (!password.getText().equals(confirmPassword.getText())) {
+			errorPassword1.setText(errorPassword2.getText());
 			errorPassword1.setVisible(true);
 			errorPassword2.setVisible(true);
 		}
@@ -84,7 +126,12 @@ public class RegisterController {
 		else
 			errorEmail.setVisible(false);
 		
-		if (!username.getText().equals("") && !errorPassword1.isVisible()
+		if(username.getText().isEmpty())
+			errorUsername.setVisible(true);
+		else
+			errorUsername.setVisible(false);
+		
+		if (!errorUsername.isVisible() && !errorPassword1.isVisible()
 				&& !errorPassword2.isVisible() && !errorEmail.isVisible()) {
 			sendEmail();
 			if (showConfirmDialog()) {
@@ -133,8 +180,12 @@ public class RegisterController {
 
 	@FXML
 	void confirmAction(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER)
-			this.sendData(null);
+		if(event.getCode() == KeyCode.ENTER)
+			sendData(null);
+	}
+	
+	@FXML
+	void exit(KeyEvent event) {
 		if(event.getCode() == KeyCode.ESCAPE) {
 			Stage th = (Stage) username.getScene().getWindow();
 			th.close();
@@ -152,5 +203,25 @@ public class RegisterController {
 		if(event.getCode() == KeyCode.ENTER)
 			refuse(null);
     }
+	
+	@FXML
+	void enterShowPassword1(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER) {
+			if(showPassword1.isSelected())
+				showPassword1.setSelected(false);
+			else
+				showPassword1.setSelected(true);
+		}
+	}
+	
+	@FXML
+	void enterShowPassword2(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER) {
+			if(showPassword2.isSelected())
+				showPassword2.setSelected(false);
+			else
+				showPassword2.setSelected(true);
+		}
+	}
 
 }

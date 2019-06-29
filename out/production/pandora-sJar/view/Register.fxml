@@ -9,12 +9,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane onKeyPressed="#confirmAction" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
+<AnchorPane onKeyPressed="#exit" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
    <children>
-      <TextField fx:id="email" layoutX="190.0" layoutY="56.0" />
-      <TextField fx:id="username" layoutX="190.0" layoutY="150.0" />
-      <PasswordField fx:id="password" layoutX="190.0" layoutY="242.0" />
-      <PasswordField fx:id="confirmPassword" layoutX="190.0" layoutY="329.0" />
+      <TextField fx:id="email" layoutX="190.0" layoutY="56.0" onKeyPressed="#confirmAction" />
+      <TextField fx:id="username" layoutX="190.0" layoutY="150.0" onKeyPressed="#confirmAction" />
+      <TextField fx:id="textPassword" layoutX="190.0" layoutY="242.0" />
+      <PasswordField fx:id="password" layoutX="190.0" layoutY="242.0" onKeyPressed="#confirmAction" />
+      <CheckBox fx:id="showPassword1" layoutX="215.0" layoutY="267.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword1" text="Show password" textFill="WHITE" />
+      <TextField fx:id="textConfirmPassword" layoutX="190.0" layoutY="329.0" />
+      <PasswordField fx:id="confirmPassword" layoutX="190.0" layoutY="329.0" onKeyPressed="#confirmAction" />
+      <CheckBox fx:id="showPassword2" layoutX="215.0" layoutY="354.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword2" text="Show password" textFill="WHITE" />
       <Label layoutX="55.0" layoutY="56.0" prefHeight="25.0" prefWidth="62.0" text="E-mail" textFill="WHITE" />
       <Label layoutX="42.0" layoutY="150.0" prefHeight="25.0" prefWidth="67.0" text="Username" textFill="WHITE" />
       <Label layoutX="48.0" layoutY="242.0" prefHeight="25.0" prefWidth="62.0" text="Password" textFill="WHITE" />
@@ -29,5 +33,6 @@
             <Tooltip text="we won't check the existence of the email" />
          </tooltip>
       </Label>
+      <Label fx:id="errorUsername" layoutX="209.0" layoutY="135.0" text="Username is empty!" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

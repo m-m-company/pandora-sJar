@@ -63,12 +63,6 @@ public class AddGameController {
         	th.close();
     	}
     }
-
-    @FXML
-    void enterFromName(KeyEvent event) {
-    	if(event.getCode() == KeyCode.ENTER)
-    		submit(null);
-    }
     
     @FXML
     void enterSubmit(KeyEvent event) {

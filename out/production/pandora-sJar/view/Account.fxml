@@ -19,16 +19,16 @@
    <children>
       <ImageView fx:id="imageView" fitHeight="60.0" fitWidth="60.0" layoutX="163.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="142.0" layoutY="115.0" mnemonicParsing="false" onAction="#changeImage" onKeyPressed="#enterSelectImage" text="Select image" />
-      <TextField fx:id="email" layoutX="185.0" layoutY="175.0" onKeyPressed="#enterFromEmail" />
-      <TextField fx:id="username" layoutX="185.0" layoutY="238.0" onKeyPressed="#enterFromUsername" />
-      <PasswordField fx:id="oldPassword" layoutX="185.0" layoutY="302.0" onKeyPressed="#enterFromOld" />
-      <TextField fx:id="oldPasswordText" layoutX="185.0" layoutY="302.0" />
+      <TextField fx:id="email" layoutX="185.0" layoutY="175.0" onKeyPressed="#enterConfirm" />
+      <TextField fx:id="username" layoutX="185.0" layoutY="238.0" onKeyPressed="#enterConfirm" />
+      <PasswordField fx:id="oldPassword" layoutX="185.0" layoutY="302.0" onKeyPressed="#enterConfirm" />
+      <TextField fx:id="oldPasswordText" layoutX="185.0" layoutY="302.0" onKeyPressed="#enterConfirm" />
       <CheckBox fx:id="showPassword1" layoutX="208.0" layoutY="327.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword1" text="Show password" textFill="WHITE" />
-      <PasswordField fx:id="newPassword1" layoutX="186.0" layoutY="372.0" onKeyPressed="#enterFromNew" />
-      <TextField fx:id="newPasswordText" layoutX="186.0" layoutY="372.0" />
+      <PasswordField fx:id="newPassword1" layoutX="186.0" layoutY="372.0" onKeyPressed="#enterConfirm" />
+      <TextField fx:id="newPasswordText" layoutX="186.0" layoutY="372.0" onKeyPressed="#enterConfirm" />
       <CheckBox fx:id="showPassword2" layoutX="209.0" layoutY="397.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword2" text="Show password" textFill="WHITE" />
-      <PasswordField fx:id="newPassword2" layoutX="186.0" layoutY="443.0" />
-      <TextField fx:id="confirmPasswordText" layoutX="186.0" layoutY="443.0" />
+      <PasswordField fx:id="newPassword2" layoutX="186.0" layoutY="443.0" onKeyPressed="#enterConfirm" />
+      <TextField fx:id="confirmPasswordText" layoutX="186.0" layoutY="443.0" onKeyPressed="#enterConfirm" />
       <CheckBox fx:id="showPassword3" layoutX="209.0" layoutY="468.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword3" text="Show password" textFill="WHITE" />
       <Label layoutX="69.0" layoutY="175.0" prefHeight="25.0" prefWidth="36.0" text="email" textFill="WHITE" />
       <Label layoutX="60.0" layoutY="238.0" prefHeight="25.0" prefWidth="67.0" text="Username" textFill="WHITE" />

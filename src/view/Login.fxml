@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -12,13 +17,13 @@
 <AnchorPane onKeyPressed="#exit" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
       <ImageView fx:id="background" fitHeight="400.0" fitWidth="314.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <TextField fx:id="username" alignment="CENTER" layoutX="66.0" layoutY="100.0" onKeyPressed="#enterFromField">
+      <TextField fx:id="username" alignment="CENTER" layoutX="66.0" layoutY="100.0" onKeyPressed="#enterLogin">
          <opaqueInsets>
             <Insets top="100.0" />
          </opaqueInsets>
       </TextField>
-      <PasswordField fx:id="password" layoutX="65.0" layoutY="170.0" onKeyPressed="#enterFromField" />
-      <TextField fx:id="passwordText" layoutX="66.0" layoutY="170.0" />
+      <PasswordField fx:id="password" layoutX="65.0" layoutY="170.0" onKeyPressed="#enterLogin" />
+      <TextField fx:id="passwordText" layoutX="66.0" layoutY="170.0" onKeyPressed="#enterLogin" />
       <CheckBox fx:id="showPassword" layoutX="88.0" layoutY="200.0" mnemonicParsing="false" onKeyPressed="#enterShowPassword" text="Show password" textFill="WHITE" />
       <Button fx:id="login" layoutX="110.0" layoutY="240.0" mnemonicParsing="false" onAction="#loginAction" onKeyPressed="#enterLogin" prefHeight="25.0" prefWidth="81.0" text="Login" />
       <Button fx:id="register" layoutX="96.0" layoutY="343.0" mnemonicParsing="false" onAction="#registration" onKeyPressed="#enterRegister" prefHeight="25.0" prefWidth="110.0" text="Register">

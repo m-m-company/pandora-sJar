@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,6 +31,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.DBConnection;
 import model.EmailManager;
 import model.User;
@@ -37,6 +39,7 @@ import model.User;
 public class LoginController {
 	@FXML
 	private ImageView background;
+	
 	@FXML
 	private Label errorData;
 
@@ -63,6 +66,7 @@ public class LoginController {
 
 	private User actualUser;
 
+	@FXML
 	public void initialize() {
 		passwordText.managedProperty().bind(showPassword.selectedProperty());
 		passwordText.visibleProperty().bind(showPassword.selectedProperty());
@@ -106,6 +110,13 @@ public class LoginController {
 					controller.init(actualUser);
 					Stage stage = new Stage();
 					stage.setTitle("Pandor's jar");
+					stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+						
+						@Override
+						public void handle(WindowEvent event) {
+							controller.logout(null);
+						}
+					});
 					Image back = new Image("file:" + Main.resourcesPath + "/backgroundApp.png");
 					BackgroundImage backgroundImage = new BackgroundImage(back, BackgroundRepeat.REPEAT,
 							BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -146,12 +157,6 @@ public class LoginController {
 			alert.showAndWait();
 		} else
 			EmailManager.inst().sendPassword(email.get(), password, dialog);
-	}
-
-	@FXML
-	void enterFromField(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER)
-			loginAction(null);
 	}
 
 	@FXML
