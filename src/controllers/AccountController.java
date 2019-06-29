@@ -80,6 +80,7 @@ public class AccountController {
     	email.setText(user.getEmail());
     	username.setText(user.getUsername());
     	imageView.setImage(user.getImage());
+    	//checkbox setting
     	oldPasswordText.managedProperty().bind(showPassword1.selectedProperty());
         oldPasswordText.visibleProperty().bind(showPassword1.selectedProperty());
         oldPassword.managedProperty().bind(showPassword1.selectedProperty().not());
@@ -164,6 +165,7 @@ public class AccountController {
     		errorPassword2.setVisible(false);
     	}
     	
+    	//we control only the visibility of the error's label for the confirm action
     	if(!errorMail.isVisible() && !errorPassword1.isVisible() && !errorPassword2.isVisible() && !errorPassword3.isVisible()) {
     		if(!newPassword1.getText().isEmpty())
     			user.setPassword(newPassword1.getText());

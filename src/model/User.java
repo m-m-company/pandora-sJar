@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 public class User {
 	
+	//the id is the primary key of the user
 	private int id;
 	private String username;
 	private Image image;

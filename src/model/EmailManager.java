@@ -30,6 +30,7 @@ public class EmailManager {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
+				//gmil smtp
 				Properties props = System.getProperties();
 				props.put("mail.smtps.host", "smtp.gmail.com");
 				props.put("mail.smtps.auth", "true");
@@ -60,6 +61,7 @@ public class EmailManager {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
+				//same thing
 				Properties props = System.getProperties();
 				props.put("mail.smtps.host", "smtp.gmail.com");
 				props.put("mail.smtps.auth", "true");

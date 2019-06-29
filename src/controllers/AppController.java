@@ -146,6 +146,7 @@ public class AppController {
 		}
 	}
 
+	//every time there is a click on a game this method shows the scoreboard
 	public void refreshRanks() {
 		gridPane.getChildren().clear();
 		if(actualGame != null) {
@@ -232,22 +233,12 @@ public class AppController {
 		}
 	}
 
+	//when we start a game, the app create the process with the game jar and we create
+	//some environment variables for the game
 	@FXML
 	void play(ActionEvent e) {
 		if (actualGame != null) {
 			String pathGame = actualGame.getPath().substring(5);
-//         FIXME: Windows should not work
-//			String so = System.getProperty("os\n" + 
-//					"\n" + 
-//					"    @FXML\n" + 
-//					"    void setGameNull(MouseEvent event) {\n" + 
-//					"    	actualGame = null;\n" + 
-//					"    	refreshRanks();\n" + 
-//					"    }.name");
-//			if (so.contains("Windows"))
-//				pathGame = actualGame.getPath().substring(6);
-//			else
-//				pathGame = 
 			ProcessBuilder pb = null;
 			try {
 				String highUser;
@@ -270,6 +261,7 @@ public class AppController {
 				}
 				pb.environment().put("pandoras_ActualUser", actualUser.getUsername());
 				Process p = pb.start();
+				//we catch the output standard stream of the game for the scoreboard
 				BufferedReader bf = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				int exitCode = p.waitFor();
 				if(exitCode != 255 ) {

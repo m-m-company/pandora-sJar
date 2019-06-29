@@ -62,6 +62,7 @@ public class RegisterController {
 
 	@FXML
 	public void initialize() {
+		//checkbox setting
 		textPassword.managedProperty().bind(showPassword1.selectedProperty());
 		textPassword.visibleProperty().bind(showPassword1.selectedProperty());
 		password.managedProperty().bind(showPassword1.selectedProperty().not());

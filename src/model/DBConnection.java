@@ -23,6 +23,7 @@ public class DBConnection {
 		}
 	}
 	
+	//singleton
 	public static DBConnection inst() {
 		if(db == null)
 			db = new DBConnection();
@@ -168,6 +169,7 @@ public class DBConnection {
 		pstmt.close();
 	}
 	
+	//we return an arrayList of the points that every user has made for that game
 	public ArrayList<Pair<String, Integer>> getPoints(Game game) throws SQLException {
 		ArrayList<Pair<String, Integer>> pairs = new ArrayList<Pair<String,Integer>>();
 		String query = "SELECT users.username, ranks.points FROM users, ranks WHERE game=? AND id=idplayer;";
